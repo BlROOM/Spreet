@@ -42,6 +42,7 @@ export default function RootLayout({
             </nav>
           </div>
         </header>
+        {modal}
         {children}
       </body>
     </html>
