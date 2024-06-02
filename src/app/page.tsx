@@ -13,6 +13,7 @@ export default function Home() {
     const getSpreetCordinate = () => {
       if (!spreetRef.current) return;
       const listLeft = spreetRef.current.getBoundingClientRect().left;
+      console.log('listLeft',listLeft )
       setCaroselX(listLeft);
     };
 
@@ -24,7 +25,7 @@ export default function Home() {
     "/images/main4.jpg",
   ];
   return (
-    <main className="m-auto relative w-[1440px] h-[600px]">
+    <main className="m-auto relative w-[1920px] h-[500px]">
       <div className="h-full w-full relative border border-black box-border">
         <div className=" h-full relative overflow-hidden">
           <Image
@@ -36,9 +37,9 @@ export default function Home() {
             onClick={() => {
               handleClickSlide(
                 "left",
-                carouselDataList,
+                carouselDataList.length ,
                 spreetRef,
-                2,
+                1,
                 caroselX
               );
             }}
@@ -52,9 +53,9 @@ export default function Home() {
             onClick={() => {
               handleClickSlide(
                 "right",
-                carouselDataList,
+                carouselDataList.length ,
                 spreetRef,
-                2,
+                1,
                 caroselX
               );
             }}
@@ -63,11 +64,11 @@ export default function Home() {
             className="relative w-full h-full flex items-center transform translate-custom transition-transform duration-500 ease-in-out"
             ref={spreetRef}
           >
-            <div className="flex w-screen h-full items-center">
+            <div className="flex items-center w-[1920px]">
               {carouselDataList.map((item, idx) => {
                 return (
-                  <div key={idx} className="relative w-full h-full">
-                    <div className="w-[1440px] h-[650px]">
+                  <div key={idx} className="relative">
+                    <div className="w-[1920px] h-[500px]">
                       <Image
                           src={item}
                           layout="fill"
