@@ -9,6 +9,7 @@ import Image from "next/image";
 export default function Home() {
   const spreetRef = useRef<HTMLDivElement>(null);
   const [caroselX, setCaroselX] = useState<number>(0);
+  const [currentSlide, setCurrentSlide] = useState(1);
   useEffect(() => {
     const getSpreetCordinate = () => {
       if (!spreetRef.current) return;
@@ -25,9 +26,9 @@ export default function Home() {
     "/images/main4.jpg",
   ];
   return (
-    <main className="m-auto relative w-[1920px] h-[500px]">
-      <div className="h-full w-full relative border border-black box-border">
-        <div className=" h-full relative overflow-hidden">
+    <main className=" relative w-[1920px] h-[500px]">
+      <div className="w-full relative border border-black box-border">
+        <div className="w-[1280px] m-auto relative overflow-hidden">
           <Image
             src="/images/blackLeftLarge.png"
             className="cursor-pointer bg-inherit w-15 h-25 text-7xl text-white absolute flex justify-center items-center z-50 top-1/2 transform -translate-y-1/2 "
@@ -39,9 +40,11 @@ export default function Home() {
                 "left",
                 carouselDataList.length ,
                 spreetRef,
-                1,
+                currentSlide,
                 caroselX
               );
+              
+              setCurrentSlide((prev) => prev > 3  ? 1 :  prev + 1 )
             }}
           />
           <Image
@@ -55,20 +58,21 @@ export default function Home() {
                 "right",
                 carouselDataList.length ,
                 spreetRef,
-                1,
+                currentSlide,
                 caroselX
               );
+              setCurrentSlide((prev) => prev > 3  ? 1 :  prev + 1 )
             }}
           />
           <div
-            className="relative w-full h-full flex items-center transform translate-custom transition-transform duration-500 ease-in-out"
+            className="relative w-[1920px] flex items-center transform translate-custom transition-transform duration-500 ease-in-out "
             ref={spreetRef}
           >
-            <div className="flex items-center w-[1920px]">
+            {/* <div className="flex items-center w-[1280px] "  > */}
               {carouselDataList.map((item, idx) => {
                 return (
-                  <div key={idx} className="relative">
-                    <div className="w-[1920px] h-[500px]">
+                  <div key={idx} className="relative ">
+                    <div className="w-[1280px] h-[500px]">
                       <Image
                           src={item}
                           layout="fill"
@@ -81,7 +85,7 @@ export default function Home() {
                   </div>
                 );
               })}
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
