@@ -15,25 +15,25 @@ const handleClickSlide = (
     //   '노드의 넓이값',
     //   sectorRef.current.childNodes[0].getBoundingClientRect().width,
     // );
-      console.log(
-        '현재 current',
-        currentX,
-        listRef_NodeWidth,
-      );
+      
     // 슬라이드 되는 박스 하나의 넓이값 * 3 (전체 넓이를 제한하는 값)
     const slideDistance = listRef_NodeWidth * 3;
     //버튼으로 눌렀을때 변화하는 현재넓이제한값
     let calculate_distance = 0;
     console.log('슬라이드 전체넓이 값?', slideDistance);
     if (direction === 'left') {
-      calculate_distance =
-        // currentX + (slideDistance / dataLength) * slideNum;
-        currentX + (slideDistance / dataLength);
-      console.log('현재calculate_distance', calculate_distance);
+      const calculationValue = (slideDistance / dataLength);
+
+      // calculate_distance = currentX + calculationValue
+      calculate_distance =  calculationValue
+      console.log('현재calculate_distance', calculate_distance, sectorTransX);
       if (sectorTransX < calculate_distance) {
         console.log('left버튼"', sectorTransX, calculate_distance);
         calculate_distance = 0;
       }
+      // if (-slideDistance > calculate_distance - calculationValue) {
+      //   calculate_distance = 0;
+      // }
     }
     if (direction === 'right') {
       const calculationValue = (slideDistance / dataLength);
@@ -50,6 +50,12 @@ const handleClickSlide = (
         calculate_distance = 0;
       }
     }
+    console.log(
+      '현재 current',
+      currentX,
+      listRef_NodeWidth,
+      calculate_distance,
+    );
     sectorRef.current.style.transform = `translateX(${calculate_distance}px)`;
   };
   

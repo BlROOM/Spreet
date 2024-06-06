@@ -44,7 +44,7 @@ export default function Home() {
                 caroselX
               );
               
-              setCurrentSlide((prev) => prev > 3  ? 1 :  prev + 1 )
+              setCurrentSlide((prev) => prev > 0  ? prev - 1  : 0 )
             }}
           />
           <Image
