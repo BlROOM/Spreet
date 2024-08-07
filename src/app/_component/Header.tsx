@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-blue-800 text-white py-4">
+    <header className="w-full bg-blue-800 text-white py-4 flex justify-center">
       <div className="container mx-auto px-4 flex align-middle justify-between">
         <nav>
           <h1 className="text-2xl font-bold">Spreet</h1>
