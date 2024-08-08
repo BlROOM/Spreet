@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Link from "next/link";
-
 import "./globals.css";
+import { Noto_Sans } from "next/font/google";
 import Header from "./_component/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={notoSans.className}>
         <Header />
         {children}
         {modal}
