@@ -1,9 +1,6 @@
-export default function LoginModal() {
+export default function LoginForm() {
   return (
-    <dialog
-      className="fixed h-2/3 w-1/4 z-10 inset-0 overflow-y-auto border rounded-lg p-10"
-      open
-    >
+    <>
       <div className="flex items-center justify-center text-center sm:block">
         <div className="flex justify-center">
           <div className="mt-3 flex flex-col items-center justify-center">
@@ -30,6 +27,6 @@ export default function LoginModal() {
           취소
         </button>
       </div>
-    </dialog>
+    </>
   );
 }

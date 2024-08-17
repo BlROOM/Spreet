@@ -14,6 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
+  console.log("------modal----", modal);
   return (
     <html lang="en">
       <body className={notoSans.className}>

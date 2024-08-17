@@ -1,5 +1,9 @@
-import LoginModal from "@/app/_component/Login";
+import MainCarousel from "@/app/_component/MainCarousel";
 
 export default function Login() {
-  return <LoginModal />;
+  return (
+    <main className="relative flex justify-center">
+      <MainCarousel />
+    </main>
+  );
 }
