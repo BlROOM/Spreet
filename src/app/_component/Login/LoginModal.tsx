@@ -1,20 +1,22 @@
 "use client";
-import { useState } from "react";
 import LoginForm from "./LoginForm";
 import Modal from "../modal/ModalLayout";
 import useModalStore from "@/app/store/modalStore";
+import SignupForm from "../signup/SignupForm";
 
 export default function LoginModal() {
-  const { closeModal, openModal, isModalOpen } = useModalStore();
-  console.log("isModalOpen", isModalOpen);
+  const { closeModal, isModalOpen, isLoginForm, toggleForm } = useModalStore();
   return (
     <Modal
       isOpen={isModalOpen}
-      title="로그인"
-      handleIsOpen={openModal}
+      title={isLoginForm ? "로그인" : "회원가입"}
       onClose={closeModal}
     >
-      <LoginForm />
+      {isLoginForm ? (
+        <LoginForm onSignupClick={toggleForm} onCancle={closeModal} />
+      ) : (
+        <SignupForm onCancle={toggleForm} />
+      )}
     </Modal>
   );
 }

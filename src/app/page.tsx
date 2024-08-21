@@ -1,4 +1,4 @@
-import LoginModal from "./_component/Login/LoginModal";
+import LoginModal from "./_component/login/LoginModal";
 import MainCarousel from "./_component/MainCarousel";
 
 export default function Home() {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/logo/Spreet.svg";
-import LoginButton from "./Login/LoginButton";
+import LoginButton from "./login/LoginButton";
 
 export default function Header() {
   return (
