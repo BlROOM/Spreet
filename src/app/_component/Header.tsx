@@ -8,8 +8,9 @@ export default function Header() {
     <header className="w-full py-4 flex justify-center border-b-2">
       <div className="w-[1280px] mx-auto px-2 flex align-middle justify-between items-center">
         <figure className="flex flex-col gap-y-1 text-sm tracking-wide font-serif">
-          <Logo />
-          {/* <Image src={Logo} width={180} height={10} alt="Spreet_logo" /> */}
+          <Link href="/">
+            <Logo />
+          </Link>
           <figcaption>Spreed Street culture</figcaption>
         </figure>
         <nav className="mr-6">

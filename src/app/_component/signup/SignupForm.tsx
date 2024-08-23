@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupFormData } from "@/type/validator";
+import Form from "../shared/Form";
+import Input from "../shared/Input";
+import Button from "../shared/Button";
 
 type SignupForm = {
   onCancle: () => void;
@@ -31,68 +34,58 @@ export default function SignupForm({ onCancle }: SignupForm) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-2">
-      <div className="mb-4">
-        <label>닉네임</label>
-        <input
-          type="text"
-          {...register("nickname")}
-          className="mt-1 w-full p-2 border rounded"
-        />
-        {errors.nickname && (
-          <p className="text-red-500 text-sm">{errors.nickname?.message}</p>
-        )}
-      </div>
+    <Form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-2">
+      <Input
+        className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
+        type="text"
+        register={register}
+        label="닉네임"
+        name="nickname"
+        error={errors.nickname}
+      />
 
-      <div className="mb-4">
-        <label>이메일</label>
-        <input
-          type="email"
-          {...register("email")}
-          className="mt-1 w-full p-2 border rounded"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email?.message}</p>
-        )}
-      </div>
+      <Input
+        className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
+        type="email"
+        register={register}
+        name="email"
+        label="이메일"
+        error={errors.email}
+      />
 
-      <div className="mb-4">
-        <label>비밀번호</label>
-        <input
-          type="password"
-          {...register("password")}
-          className="mt-1 w-full p-2 border rounded"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password?.message}</p>
-        )}
-      </div>
+      <Input
+        className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
+        type="password"
+        register={register}
+        name="password"
+        label="비밀번호"
+        error={errors.password}
+      />
 
-      <div className="mb-4">
-        <label>비멀번호 확인</label>
-        <input
-          type="password"
-          {...register("passwordConfirm")}
-          className="mt-1 w-full p-2 border rounded"
-        />
-        {errors.passwordConfirm && (
-          <p className="text-red-500 text-sm">
-            {errors.passwordConfirm?.message}
-          </p>
-        )}
-      </div>
-      <div className="flex justify-between">
-        <button type="submit" className="w-full py-2 rounded border">
-          회원가입
-        </button>
-        <button
+      <Input
+        className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
+        type="password"
+        register={register}
+        name="passwordConfirm"
+        label="비밀번호 확인"
+        error={errors.passwordConfirm}
+      />
+
+      <div className="flex justify-between gap-2">
+        <Button
+          type="submit"
+          className="w-full py-2 rounded-md border bg-[#D10536] text-[#fff] font-semibold hover:bg-opacity-75  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+        >
+          확인
+        </Button>
+        <Button
           type="button"
           onClick={onCancle}
-          className="w-full py-2 rounded border"
+          className="w-full py-2 rounded-md bg-[#B3B3B3] font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-opacity-90"
         >
           뒤로가기
-        </button>
+        </Button>
       </div>
-    </form>
+    </Form>
   );
 }
