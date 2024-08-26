@@ -41,6 +41,14 @@ export const signupSchema = z.object({
     ),
 });
 
+export const passwordConfirmSchema = signupSchema.refine(
+  (data) => data.password === data.passwordConfirm,
+  {
+    message: "비밀번호 확인이 비밀번호와 일치하지 않습니다.",
+    path: ["passwordConfirm"], // 오류를 `passwordConfirm` 필드에 표시
+  }
+);
+
 export const loginSchema = z.object({
   email: z.string().email({ message: "올바른 이메일을 입력해주세요." }),
   password: z

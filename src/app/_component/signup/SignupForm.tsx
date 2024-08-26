@@ -4,6 +4,8 @@ import { signupSchema, SignupFormData } from "@/type/validator";
 import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
+import ToggleEyeIcon from "../ToggleEyeIcon";
+import useToggleEye from "@/app/store/toggleEyeStore";
 
 type SignupForm = {
   onCancle: () => void;
@@ -11,8 +13,6 @@ type SignupForm = {
 
 export default function SignupForm({ onCancle }: SignupForm) {
   // register: 폼 필드를 React Hook Form에 등록하는 역할 (등록된 필드를 추적, 폼 데이터를 수집)
-  // handleSubmit: 폼이 제출될 때 호출될 함수를 정의
-  // formState: { errors }: 폼 상태를 나타내며, 주로 입력 필드의 유효성 검사 에러를
   const {
     register,
     handleSubmit,
@@ -28,6 +28,12 @@ export default function SignupForm({ onCancle }: SignupForm) {
       passwordConfirm: "",
     },
   });
+
+  const { visibleStates } = useToggleEye();
+  const passwordInputType = visibleStates["password"] ? "text" : "password";
+  const passwordConfirmInputType = visibleStates["passwordConfirm"]
+    ? "text"
+    : "password";
 
   const onSubmit = (data: SignupFormData) => {
     console.log("Form Data:", data);
@@ -55,23 +61,33 @@ export default function SignupForm({ onCancle }: SignupForm) {
 
       <Input
         className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
-        type="password"
+        type={passwordInputType}
         register={register}
         name="password"
         label="비밀번호"
         error={errors.password}
-      />
+      >
+        <ToggleEyeIcon
+          className="absolute right-0 top-1/2 -translate-x-1/2 -translate-y-1/3 text-grayscale-700 w-6 h-6 cursor-pointer"
+          fieldKey="password"
+        />
+      </Input>
 
       <Input
         className="mt-1 w-full p-2 border border-[#C6C6C6] rounded"
-        type="password"
+        type={passwordConfirmInputType}
         register={register}
         name="passwordConfirm"
         label="비밀번호 확인"
         error={errors.passwordConfirm}
-      />
+      >
+        <ToggleEyeIcon
+          className="absolute right-0 top-1/2 -translate-x-1/2 -translate-y-1/3 text-grayscale-700 w-6 h-6 cursor-pointer"
+          fieldKey="passwordConfirm"
+        />
+      </Input>
 
-      <div className="flex justify-between gap-2">
+      <div className="flex justify-between gap-2 mt-6">
         <Button
           type="submit"
           className="w-full py-2 rounded-md border bg-[#D10536] text-[#fff] font-semibold hover:bg-opacity-75  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"

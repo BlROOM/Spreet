@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 type Input = {
@@ -8,6 +8,7 @@ type Input = {
   name: string;
   error?: FieldError;
   className?: string;
+  children?: ReactNode;
 };
 
 export default function Input({
@@ -17,9 +18,10 @@ export default function Input({
   name,
   error,
   className,
+  children,
 }: Input) {
   return (
-    <div className="mb-1 h-[90px]">
+    <div className="relative relmb-1 h-[90px]">
       <label className="text-[#333333] font-semibold">{label}</label>
       <input
         type={type}
@@ -27,6 +29,7 @@ export default function Input({
         className={className}
         placeholder={label}
       />
+      {children}
       {error && <p className="text-[red] text-sm">{error.message}</p>}
     </div>
   );
