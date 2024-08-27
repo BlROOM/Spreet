@@ -1,7 +1,7 @@
 import React from "react";
 import EyeHide from "@/assets/icons/eye_hide.svg";
 import EyeShow from "@/assets/icons/eye_show.svg";
-import useToggleEye from "../app/store/toggleEyeStore";
+import useToggleEye from "@/app/store/toggleEyeStore";
 
 type FieldKey = "password" | "passwordConfirm";
 

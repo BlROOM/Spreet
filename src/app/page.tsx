@@ -1,5 +1,5 @@
-import LoginModal from "../component/login/LoginModal";
-import MainCarousel from "../component/MainCarousel";
+import LoginModal from "@/components/login/LoginModal";
+import MainCarousel from "@/components/MainCarousel";
 
 export default function Home() {
   return (

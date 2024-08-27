@@ -1,3 +1,4 @@
+"use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupFormData } from "@/type/validator";
@@ -35,9 +36,39 @@ export default function SignupForm({ onCancle }: SignupForm) {
     ? "text"
     : "password";
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log("Form Data:", data);
-  };
+  async function onSubmit(data: SignupFormData) {
+    console.log("data", data);
+    const formData = new FormData();
+
+    formData.append("nickname", data.nickname);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("passwordConfirm", data.passwordConfirm);
+
+    try {
+      // fetch 요청
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        // 응답이 실패한 경우
+        const errorData = await response.json();
+        alert(`회원가입 실패: ${errorData}`);
+        return;
+      }
+
+      // 응답이 성공한 경우
+      const result = await response.json();
+      console.log("Signup successful:", result);
+
+      // 성공 후 동작 추가 (예: 리디렉션, 알림 등)
+    } catch (error) {
+      // 네트워크 오류 등
+      console.error("Error during signup:", error);
+    }
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-2">

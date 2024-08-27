@@ -1,4 +1,4 @@
-import supabase from "@/utils/supabaseClient";
+import supabase from "@/utils/supabase/supabaseClient";
 import validateForm from "@/utils/validateForm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,7 +22,7 @@ import { NextRequest, NextResponse } from "next/server";
 // 로그아웃: /api/auth/logout
 // 비밀번호 재설정: /api/auth/reset-password
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const userId = formData.get("userId") as string;
@@ -32,7 +32,7 @@ export default async function POST(req: NextRequest) {
     const provider = formData.get("provider") as string;
 
     //유효성 검사 필드 정의
-    const requiredFields = ["userId", "email", "password", "nickname"];
+    const requiredFields = ["email", "password", "nickname"];
 
     // 유효성 검사 실행
     const { valid, missingField } = validateForm(formData, requiredFields);
@@ -47,14 +47,16 @@ export default async function POST(req: NextRequest) {
       email,
       password,
       options: {
+        emailRedirectTo: "http://localhost:3000/auth/confirm",
         data: {
-          userId,
+          // userId,
           nickname,
           provider,
         },
       },
     });
 
+    console.log("------data회원가입----", data);
     if (error) {
       console.error("Supabase sign up error:", error.message);
       return NextResponse.json(
