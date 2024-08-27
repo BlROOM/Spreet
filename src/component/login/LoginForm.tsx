@@ -62,7 +62,7 @@ export default function LoginForm({ onSignupClick, onCancle }: LoginForm) {
           <div className="absolute inset-0 flex items-center">
             <hr className="w-full border-t border-grayscale-400 bg-[]" />
           </div>
-          <div className="relative bg-[#fff] px-2 text-grayscale-600 text-sm text-[gray]">
+          <div className="relative bg-[#fff] px-2 text-grayscale-600 text-sm">
             또는
           </div>
         </div>

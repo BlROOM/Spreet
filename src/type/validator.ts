@@ -8,6 +8,7 @@ const phoneRegex = /^010\d{8}$/;
 
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
+export type UserRegistrationInput = z.infer<typeof userRegistrationSchema>;
 
 export const signupSchema = z.object({
   email: z.string().email({ message: "올바른 이메일을 입력해주세요." }),
@@ -59,4 +60,14 @@ export const loginSchema = z.object({
       (value) => passwordRegex.test(value),
       "비밀번호는 최소 6자리 이상, 영문, 숫자, 특수문자를 포함해야 합니다."
     ),
+});
+
+export const userRegistrationSchema = z.object({
+  userId: z.string().nonempty({ message: "User ID is required" }),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" }),
+  nickname: z.string().nonempty({ message: "Nickname is required" }),
+  provider: z.string().optional(),
 });
