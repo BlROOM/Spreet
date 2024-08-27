@@ -14,3 +14,16 @@ model Post {
   updated_at DateTime? @updatedAt @db.Timestamptz(6)
   content    String?  @default("")
 }
+
+model User {
+  auth_id      String   @id @default(uuid()) @db.Uuid 
+  user_id      String   @db.Uuid 
+  email        String   @db.Text 
+  phone_number String   @db.Text  
+  nickname     String   @db.Text  
+  created_at   DateTime @default(now()) @db.Timestamptz(6)  
+  updated_at   DateTime @updatedAt @db.Timestamptz(6)  
+  provider     String?  @db.Text 
+
+  @@map("users")  // 실제 테이블 이름을 "users"로 매핑
+}

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import handleClickSlide from "@/app/_utils/handleClickSlide";
+import handleClickSlide from "@/utils/handleClickSlide";
 
 import { useEffect, useRef, useState } from "react";
 

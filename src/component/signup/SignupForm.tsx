@@ -94,6 +94,7 @@ export default function SignupForm({ onCancle }: SignupForm) {
         >
           확인
         </Button>
+
         <Button
           type="button"
           onClick={onCancle}
