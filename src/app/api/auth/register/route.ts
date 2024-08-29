@@ -1,6 +1,7 @@
 import supabase from "@/utils/supabase/supabaseClient";
 import validateForm from "@/utils/validateForm";
 import { AuthError } from "@supabase/supabase-js";
+import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 // RESTful API 설계 원칙에 따라 auth 경로를 사용한 이유는 인증과 관련된 작업을 명확히 구분,
@@ -32,7 +33,7 @@ const getErrorMessage = (error: Error) => {
       };
     default:
       return {
-        message: "회원가입 중 오류 발생",
+        message: "다시 시도하시거나 고객센터에 문의해주세요.",
         status: 500,
       };
   }
@@ -41,6 +42,7 @@ const getErrorMessage = (error: Error) => {
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
+    const cookieStore = cookies();
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const nickname = formData.get("nickname") as string;
@@ -57,12 +59,12 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
+    const origin = req.headers.get("origin");
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: "http://localhost:3000/auth/confirm",
+        emailRedirectTo: `${origin}/api/auth/confirm`,
         data: {
           nickname,
           provider,

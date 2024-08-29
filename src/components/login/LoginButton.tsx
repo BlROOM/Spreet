@@ -1,5 +1,5 @@
 "use client";
-import useModalStore from "@/app/store/modalStore";
+import useModalStore from "@/store/useModalStore";
 
 export default function LoginButton() {
   const openModal = useModalStore((state) => state.openModal);

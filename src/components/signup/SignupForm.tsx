@@ -5,7 +5,7 @@ import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import ToggleEyeIcon from "../ToggleEyeIcon";
-import useToggleEye from "@/app/store/toggleEyeStore";
+import useToggleEye from "@/store/useToggleEyeStore";
 import sweetAlert from "@/utils/sweetAlert";
 
 type SignupForm = {
@@ -21,7 +21,6 @@ export default function SignupForm({ onCancle }: SignupForm) {
   } = useForm({
     resolver: zodResolver(signupSchema), // 폼 유효성 검사에 Zod 스키마를 사용
     defaultValues: {
-      // 기본값 설정
       nickname: "",
       email: "",
       phone: "",
@@ -45,28 +44,26 @@ export default function SignupForm({ onCancle }: SignupForm) {
     formData.append("passwordConfirm", data.passwordConfirm);
 
     try {
-      // fetch 요청
       const response = await fetch("/api/auth/register", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        // 응답이 실패한 경우
         const errorData = await response.json();
         console.log(errorData, "------error");
         sweetAlert(5000, "error", `회원가입 실패 \n${errorData.error}`);
         return;
       }
 
-      // 응답이 성공한 경우
       const result = await response.json();
-      sweetAlert(5000, "success", `회원가입에 성공했습니다. }`);
+      sweetAlert(
+        5000,
+        "success",
+        `입력하신 이메일로\n인증링크를 보내드렸어요.\n이메일을 확인 후 회원가입 완료해주세요.`
+      );
       console.log("Signup successful:", result);
-
-      // 성공 후 동작 추가 (예: 리디렉션, 알림 등)
     } catch (error) {
-      // 네트워크 오류 등
       console.error("Error during signup:", error);
     }
   }

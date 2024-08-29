@@ -1,7 +1,7 @@
 "use client";
 import LoginForm from "./LoginForm";
 import Modal from "../modal/ModalLayout";
-import useModalStore from "@/app/store/modalStore";
+import useModalStore from "@/store/useModalStore";
 import SignupForm from "../signup/SignupForm";
 
 export default function LoginModal() {
@@ -14,10 +14,7 @@ export default function LoginModal() {
       onClose={closeModal}
     >
       {modalContent === "로그인" ? (
-        <LoginForm
-          onSignupClick={() => setModalContent("회원가입")}
-          onCancle={closeModal}
-        />
+        <LoginForm onSignupClick={() => setModalContent("회원가입")} />
       ) : (
         modalContent === "회원가입" && (
           <SignupForm onCancle={() => setModalContent("로그인")} />
