@@ -1,5 +1,6 @@
 import supabase from "@/utils/supabase/supabaseClient";
 import validateForm from "@/utils/validateForm";
+import { AuthError } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
 // RESTful API 설계 원칙에 따라 auth 경로를 사용한 이유는 인증과 관련된 작업을 명확히 구분,
@@ -21,6 +22,21 @@ import { NextRequest, NextResponse } from "next/server";
 // 로그인: /api/auth/login
 // 로그아웃: /api/auth/logout
 // 비밀번호 재설정: /api/auth/reset-password
+
+const getErrorMessage = (error : Error) => {
+  switch (error.message) {
+    case "User already registered":
+      return {
+        message: "해당 이메일은 이미 사용중 입니다.",
+        status: 500,
+      };
+    default:
+      return {
+        message: "회원가입 중 오류 발생",
+        status: 500,
+      };
+  }
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -56,14 +72,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log("------data회원가입----", data);
-    if (error) {
-      console.error("Supabase sign up error:", error.message);
-      return NextResponse.json(
-        { error: "회원가입 중 오류 발생" },
-        { status: 500 }
-      );
+    if (error instanceof AuthError) {
+      const { message, status } = getErrorMessage(error);
+      return NextResponse.json({ error: message }, { status });
     }
+
     const response = NextResponse.json(
       { message: "회원가입 성공" },
       { status: 200 }

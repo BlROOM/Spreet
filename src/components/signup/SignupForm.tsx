@@ -7,6 +7,7 @@ import Input from "../shared/Input";
 import Button from "../shared/Button";
 import ToggleEyeIcon from "../ToggleEyeIcon";
 import useToggleEye from "@/app/store/toggleEyeStore";
+import sweetAlert from "@/utils/sweetAlert";
 
 type SignupForm = {
   onCancle: () => void;
@@ -37,7 +38,6 @@ export default function SignupForm({ onCancle }: SignupForm) {
     : "password";
 
   async function onSubmit(data: SignupFormData) {
-    console.log("data", data);
     const formData = new FormData();
 
     formData.append("nickname", data.nickname);
@@ -55,7 +55,8 @@ export default function SignupForm({ onCancle }: SignupForm) {
       if (!response.ok) {
         // 응답이 실패한 경우
         const errorData = await response.json();
-        alert(`회원가입 실패: ${errorData}`);
+        console.log(errorData, "------error");
+        sweetAlert(5000, "error", `회원가입 실패 \n${errorData.error}`);
         return;
       }
 

@@ -23,7 +23,7 @@ export default function ModalLayout({
     <ModalWrapper isOpen={isOpen} onClose={onClose}>
       <ModalBox
         ref={modalRef}
-        className="p-10 fixed inset-0 z-50 top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 border-none rounded-[32px] min-h-[600px] h-auto shadow-md w-1/4 bg-[white]"
+        className="p-10 fixed inset-0 z-50 top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4 border-none rounded-[32px] min-h-[600px] h-auto shadow-md min-w-[350px] max-w-[40%] bg-[white]"
       >
         <div className="flex justify-between items-center mb-6">
           <div className="flex-1 flex justify-center">
