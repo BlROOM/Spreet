@@ -5,17 +5,23 @@ import useModalStore from "@/app/store/modalStore";
 import SignupForm from "../signup/SignupForm";
 
 export default function LoginModal() {
-  const { closeModal, isModalOpen, isLoginForm, toggleForm } = useModalStore();
+  const { closeModal, isModalOpen, modalContent, setModalContent } =
+    useModalStore();
   return (
     <Modal
       isOpen={isModalOpen}
-      title={isLoginForm ? "로그인" : "회원가입"}
+      title={modalContent ? "로그인" : "회원가입"}
       onClose={closeModal}
     >
-      {isLoginForm ? (
-        <LoginForm onSignupClick={toggleForm} onCancle={closeModal} />
+      {modalContent === "로그인" ? (
+        <LoginForm
+          onSignupClick={() => setModalContent("회원가입")}
+          onCancle={closeModal}
+        />
       ) : (
-        <SignupForm onCancle={toggleForm} />
+        modalContent === "회원가입" && (
+          <SignupForm onCancle={() => setModalContent("로그인")} />
+        )
       )}
     </Modal>
   );

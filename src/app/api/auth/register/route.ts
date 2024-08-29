@@ -23,7 +23,7 @@ import { NextRequest, NextResponse } from "next/server";
 // 로그아웃: /api/auth/logout
 // 비밀번호 재설정: /api/auth/reset-password
 
-const getErrorMessage = (error : Error) => {
+const getErrorMessage = (error: Error) => {
   switch (error.message) {
     case "User already registered":
       return {
@@ -41,7 +41,6 @@ const getErrorMessage = (error : Error) => {
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const userId = formData.get("userId") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const nickname = formData.get("nickname") as string;
@@ -65,7 +64,6 @@ export async function POST(req: NextRequest) {
       options: {
         emailRedirectTo: "http://localhost:3000/auth/confirm",
         data: {
-          // userId,
           nickname,
           provider,
         },

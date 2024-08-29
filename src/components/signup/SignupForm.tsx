@@ -1,4 +1,3 @@
-"use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupFormData } from "@/type/validator";
@@ -62,6 +61,7 @@ export default function SignupForm({ onCancle }: SignupForm) {
 
       // 응답이 성공한 경우
       const result = await response.json();
+      sweetAlert(5000, "success", `회원가입에 성공했습니다. }`);
       console.log("Signup successful:", result);
 
       // 성공 후 동작 추가 (예: 리디렉션, 알림 등)
