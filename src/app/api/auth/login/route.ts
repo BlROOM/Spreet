@@ -1,6 +1,8 @@
-import supabase from "@/utils/supabase/supabaseClient";
+// import supabaseClient from "@/utils/supabase/supabaseClient";
 import validateForm from "@/utils/validateForm";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { AuthError } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const getErrorMessage = (error: Error) => {
@@ -26,6 +28,11 @@ const getErrorMessage = (error: Error) => {
 
 export async function POST(req: NextRequest) {
   try {
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({
+      cookies: () => cookieStore,
+    });
+
     const formData = await req.formData();
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -57,6 +64,11 @@ export async function POST(req: NextRequest) {
       { message: "로그인 성공" },
       { status: 200 }
     );
+    // response.cookies.set("supabase_access_token", data.session!.access_token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   path: "/",
+    // });
 
     return response;
   } catch (error) {
