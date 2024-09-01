@@ -7,7 +7,7 @@ type ToggleEyeState = {
 };
 
 const useToggleEye = create<ToggleEyeState>((set) => ({
-  visibleStates: {},
+  visibleStates: {}, //상태값이 들어옴, password, passwordConfirm
   toggleVisibility: (key) =>
     set((state) => ({
       visibleStates: {

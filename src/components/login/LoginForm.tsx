@@ -5,20 +5,15 @@ import Form from "../shared/Form";
 import Input from "../shared/Input";
 import Button from "../shared/Button";
 import sweetAlert from "@/utils/sweetAlert";
-import { useSupabase } from "@/hooks/useSupabase";
-import { useEffect } from "react";
+import useModalStore from "@/store/useModalStore";
 
 type LoginForm = {
   onSignupClick: () => void;
 };
 
 export default function LoginForm({ onSignupClick }: LoginForm) {
-  const { checkSignIn } = useSupabase();
+  const { closeModal } = useModalStore();
 
-  useEffect(() => {
-    const user = checkSignIn();
-    console.log("user-------", user);
-  });
   const {
     register,
     handleSubmit,
@@ -51,7 +46,8 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
       }
 
       const result = await response.json();
-      sweetAlert(5000, "success", `로그인에 성공했습니다. }`);
+      sweetAlert(5000, "success", `로그인에 성공했습니다.`);
+      closeModal();
       console.log("Login successful:", result);
     } catch (error) {
       console.error("Error during login:", error);

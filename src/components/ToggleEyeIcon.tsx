@@ -11,6 +11,7 @@ type ToggleEyeIcon = {
   // 현재 password, passwordConfirm 에 사용
 };
 
+// 사용자가 누를수 있는 눈 아이콘
 export default function ToggleEyeIcon({ className, fieldKey }: ToggleEyeIcon) {
   const { visibleStates, toggleVisibility } = useToggleEye();
   const isVisible = visibleStates[fieldKey] || false;

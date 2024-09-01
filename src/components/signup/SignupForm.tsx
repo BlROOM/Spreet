@@ -7,12 +7,15 @@ import Button from "../shared/Button";
 import ToggleEyeIcon from "../ToggleEyeIcon";
 import useToggleEye from "@/store/useToggleEyeStore";
 import sweetAlert from "@/utils/sweetAlert";
+import useModalStore from "@/store/useModalStore";
 
 type SignupForm = {
   onCancle: () => void;
 };
 
 export default function SignupForm({ onCancle }: SignupForm) {
+  const { closeModal } = useModalStore();
+
   // register: 폼 필드를 React Hook Form에 등록하는 역할 (등록된 필드를 추적, 폼 데이터를 수집)
   const {
     register,
@@ -29,6 +32,7 @@ export default function SignupForm({ onCancle }: SignupForm) {
     },
   });
 
+  // 사용자가 눈 아이콘을 누른다면 타입을 변경하여 입력 내용 보이게 또는 숨김
   const { visibleStates } = useToggleEye();
   const passwordInputType = visibleStates["password"] ? "text" : "password";
   const passwordConfirmInputType = visibleStates["passwordConfirm"]
@@ -55,14 +59,9 @@ export default function SignupForm({ onCancle }: SignupForm) {
         sweetAlert(5000, "error", `회원가입 실패 \n${errorData.error}`);
         return;
       }
-
-      const result = await response.json();
-      sweetAlert(
-        5000,
-        "success",
-        `입력하신 이메일로\n인증링크를 보내드렸어요.\n이메일을 확인 후 회원가입 완료해주세요.`
-      );
-      console.log("Signup successful:", result);
+      sweetAlert(5000, "success", `회원가입 성공\n 로그인 해주세요!`);
+      closeModal();
+      return;
     } catch (error) {
       console.error("Error during signup:", error);
     }

@@ -7,6 +7,7 @@ import SignupForm from "../signup/SignupForm";
 export default function LoginModal() {
   const { closeModal, isModalOpen, modalContent, setModalContent } =
     useModalStore();
+
   return (
     <Modal
       isOpen={isModalOpen}

@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       email,
       password,
       options: {
-        emailRedirectTo: `${origin}/api/auth/confirm`,
+        // emailRedirectTo: `${origin}/api/auth/confirm`,
         data: {
           nickname,
           provider,
