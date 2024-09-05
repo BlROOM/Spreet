@@ -3,6 +3,7 @@ import LoginForm from "./LoginForm";
 import Modal from "../modal/ModalLayout";
 import useModalStore from "@/store/useModalStore";
 import SignupForm from "../signup/SignupForm";
+import useLoadingStore from "@/store/useLoading";
 
 export default function LoginModal() {
   const { closeModal, isModalOpen, modalContent, setModalContent } =
@@ -11,7 +12,7 @@ export default function LoginModal() {
   return (
     <Modal
       isOpen={isModalOpen}
-      title={modalContent ? "로그인" : "회원가입"}
+      title={modalContent === "로그인" ? "로그인" : "회원가입"}
       onClose={closeModal}
     >
       {modalContent === "로그인" ? (

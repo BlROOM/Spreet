@@ -26,6 +26,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 const getErrorMessage = (error: Error) => {
   switch (error.message) {
+    case "Email rate limit exceeded":
+      return {
+        message:
+          "죄송합니다.너무 많은 회원가입\n요청으로 인해\n처리가 지연되고 있습니다.\n잠시 후에 다시 시도해 주세요.",
+        status: 429,
+      };
     case "User already registered":
       return {
         message: "해당 이메일은 이미 사용중 입니다.",
@@ -42,7 +48,6 @@ const getErrorMessage = (error: Error) => {
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const cookieStore = cookies();
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const nickname = formData.get("nickname") as string;
@@ -64,14 +69,14 @@ export async function POST(req: NextRequest) {
       email,
       password,
       options: {
-        // emailRedirectTo: `${origin}/api/auth/confirm`,
+        emailRedirectTo: `${origin}/api/auth/confirm`,
         data: {
           nickname,
           provider,
         },
       },
     });
-
+    console.log("----error---", error);
     if (error instanceof AuthError) {
       const { message, status } = getErrorMessage(error);
       return NextResponse.json({ error: message }, { status });

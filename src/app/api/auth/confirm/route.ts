@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { createServerSupabaseClient } from "@/utils/supabase/creatClient";
-import { cookies } from "next/headers";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import supabaseClient from "@/utils/supabase/supabaseClient";
 
 export async function GET(request: Request) {
@@ -10,14 +8,11 @@ export async function GET(request: Request) {
   const code = String(requestUrl.searchParams.get("code"));
   console.log("----code", code);
   if (code) {
-    // const cookieStore = cookies();
-    // const supabase = createServerSupabaseClient();
-    // const supabase = supabaseClient({
-    //   cookies: () => cookieStore,
-    // });
-    const supabase = supabaseClient;
+    const supabase = createServerSupabaseClient();
     //서버는 인증 코드를 exchangeCodeForSession 메서드에 전달하여 supabsae에서 해당 유저 세션 획득
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    console.log("---data---", data);
+    console.log("---error---", error);
   }
 
   return NextResponse.redirect(requestUrl.origin);

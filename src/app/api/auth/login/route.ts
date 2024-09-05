@@ -10,7 +10,7 @@ const getErrorMessage = (error: Error) => {
     case "Email not confirmed":
       return {
         message:
-          "인증이 완료되지\n않은 회원입니다.\n이메일을 확인하여\n인증을 완료해주세요.",
+          "인증이 완료되지않은 회원입니다.\n이메일을 확인하여\n인증을 완료해주세요.",
         status: 500,
       };
     case "Invalid login credentials":
@@ -54,7 +54,6 @@ export async function POST(req: NextRequest) {
       password,
     });
     console.error("error", error);
-    console.error("data", data);
     if (error instanceof AuthError) {
       const { message, status } = getErrorMessage(error);
       return NextResponse.json({ error: message }, { status });
@@ -64,11 +63,6 @@ export async function POST(req: NextRequest) {
       { message: "로그인 성공" },
       { status: 200 }
     );
-    // response.cookies.set("supabase_access_token", data.session!.access_token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   path: "/",
-    // });
 
     return response;
   } catch (error) {

@@ -9,10 +9,8 @@ const notoSans = Noto_Sans({
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -20,7 +18,6 @@ export default function RootLayout({
         <Header />
         {children}
         <div id="root-modal"></div>
-        {modal}
       </body>
     </html>
   );
