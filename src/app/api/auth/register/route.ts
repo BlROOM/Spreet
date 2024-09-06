@@ -1,7 +1,8 @@
-import supabase from "@/utils/supabase/supabaseClient";
+// import supabase from "@/utils/supabase/supabaseClient";
+import { createClient } from "@/utils/supabase/server";
+
 import validateForm from "@/utils/validateForm";
 import { AuthError } from "@supabase/supabase-js";
-import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 // RESTful API 설계 원칙에 따라 auth 경로를 사용한 이유는 인증과 관련된 작업을 명확히 구분,
@@ -46,6 +47,7 @@ const getErrorMessage = (error: Error) => {
 };
 
 export async function POST(req: NextRequest) {
+  const supabase = createClient();
   try {
     const formData = await req.formData();
     const email = formData.get("email") as string;

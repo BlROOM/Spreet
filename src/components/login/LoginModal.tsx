@@ -3,7 +3,6 @@ import LoginForm from "./LoginForm";
 import Modal from "../modal/ModalLayout";
 import useModalStore from "@/store/useModalStore";
 import SignupForm from "../signup/SignupForm";
-import useLoadingStore from "@/store/useLoading";
 
 export default function LoginModal() {
   const { closeModal, isModalOpen, modalContent, setModalContent } =

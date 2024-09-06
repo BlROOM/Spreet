@@ -5,10 +5,8 @@ import checkSignIn from "@/utils/supabase/checkSignin";
 import supabase from "@/utils/supabase/supabaseClient";
 import sweetAlert from "@/utils/sweetAlert";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function LoginButton() {
-  const router = useRouter();
   const openModal = useModalStore((state) => state.openModal);
   const { isSignedIn, setSignIn } = useAuthStore();
 
