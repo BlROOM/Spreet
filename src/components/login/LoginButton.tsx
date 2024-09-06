@@ -4,9 +4,15 @@ import useModalStore from "@/store/useModalStore";
 import checkSignIn from "@/utils/supabase/checkSignin";
 import supabase from "@/utils/supabase/supabaseClient";
 import sweetAlert from "@/utils/sweetAlert";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function LoginButton() {
+type LoginButton = {
+  session: any;
+};
+
+export default function LoginButton({ session }: LoginButton) {
+  const router = useRouter();
   const openModal = useModalStore((state) => state.openModal);
   const { isSignedIn, setSignIn } = useAuthStore();
 
@@ -17,6 +23,7 @@ export default function LoginButton() {
     }
     sweetAlert(5000, "success", "로그아웃 성공");
     setSignIn(false);
+    router.refresh();
   };
 
   const [isLogin, setLogin] = useState(false);
@@ -24,15 +31,15 @@ export default function LoginButton() {
   useEffect(() => {
     const fetchUserState = async () => {
       const user = await checkSignIn();
-      // console.log("-----user로그인버튼----", user);
+      console.log("-----user로그인버튼----", user, session);
       setLogin(!!user);
     };
     fetchUserState();
-  }, [isSignedIn]);
+  }, [isSignedIn, session]);
 
   return (
     <>
-      {isLogin ? (
+      {isLogin || session ? (
         <button onClick={hanldeLogout}>로그아웃</button>
       ) : (
         <button onClick={openModal}>로그인</button>

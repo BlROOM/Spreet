@@ -2,8 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/logos/Spreet.svg";
 import LoginButton from "./login/LoginButton";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Header() {
+export default async function Header() {
+  const supabase = createClient();
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
   return (
     <header className="w-full py-4 flex justify-center border-b-2">
       <div className="w-[1280px] mx-auto px-2 flex align-middle justify-between items-center">
@@ -11,7 +15,6 @@ export default function Header() {
           <Link href="/" className="w-32 h-16 pt-2">
             <Logo />
           </Link>
-          {/* <figcaption>Spreed Street culture</figcaption> */}
         </figure>
         <nav className="mr-6">
           <ul className="flex gap-3 text-lg tracking-wide font-semibold">
@@ -22,7 +25,7 @@ export default function Header() {
               <Link href="./">강의</Link>
             </li>
             <li>
-              <LoginButton />
+              <LoginButton session={sessionData.session} />
             </li>
           </ul>
         </nav>

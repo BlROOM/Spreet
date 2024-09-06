@@ -11,6 +11,8 @@ import ToggleEyeIcon from "../ToggleEyeIcon";
 import useToggleEye from "@/store/useToggleEyeStore";
 import LoadingSpinner from "../loading/LoadingSpinner";
 import useLoadingStore from "@/store/useLoading";
+import Script from "next/script";
+import KakaoLogo from "@/assets/icons/kakao_logo.svg";
 
 type LoginForm = {
   onSignupClick: () => void;
@@ -20,7 +22,6 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
   const { closeModal } = useModalStore();
   const { setSignIn } = useAuthStore();
   const { isLoading } = useLoadingStore();
-
   const {
     register,
     handleSubmit,
@@ -69,6 +70,16 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
       toggleLoading();
     }
   };
+
+  function kakaoLogin() {
+    toggleLoading();
+    if (window?.Kakao?.Auth) {
+      window?.Kakao.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI!,
+      });
+    }
+  }
+
   return (
     <>
       {isLoading ? (
@@ -136,19 +147,34 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
 
           {/* 소셜 로그인 */}
           <div className="flex flex-col gap-y-4 mt-6">
-            <Button
+            {/* <Button
               type="button"
               className="w-full rounded-md border shadow-sm px-6 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 "
             >
-              네이버
-            </Button>
+              구글
+            </Button> */}
             <Button
               type="button"
-              className="w-full rounded-md border shadow-sm px-6 py-2 focus:outline-none focus:ring-2 focus:ring-offset-2 "
+              onClick={kakaoLogin}
+              className="relative w-full rounded-md px-6 h-12 py-2 focus:outline-none font-black text-grayscale-900 text-lg bg-[#FFE812]"
             >
+              <KakaoLogo className="rounded-full w-12 h-12 absolute left-6 top-[-4px] mt-1" />
               카카오
             </Button>
           </div>
+
+          <Script
+            src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
+            integrity="..."
+            crossOrigin="anonymous"
+            onLoad={() => {
+              if (!window?.Kakao!.isInitialized()) {
+                window.Kakao!.cleanup();
+              }
+
+              window.Kakao!.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY!);
+            }}
+          />
         </Form>
       )}
     </>
