@@ -1,16 +1,21 @@
+import useModalStore from "@/store/useModalStore";
 import { useEffect, useRef } from "react";
 
 export function useModalFocusTrap() {
   const modalRef = useRef<HTMLDialogElement>(null);
-
+  const { isModalOpen } = useModalStore();
   useEffect(() => {
-    // 배경 스크롤 방지
-    document.body.style.overflow = "hidden";
+    const modal = modalRef.current;
 
+    // 배경 스크롤 방지
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     // 포커스 트랩
     const focusableElements =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    const modal = modalRef.current;
     const firstFocusableElement = modal?.querySelectorAll(focusableElements)[0];
     const lastFocusableElement =
       modal?.querySelectorAll(focusableElements)[
@@ -41,6 +46,6 @@ export function useModalFocusTrap() {
       document.body.style.overflow = ""; // Clean up overflow style
       document.removeEventListener("keydown", handleTab);
     };
-  }, [modalRef]);
+  }, [modalRef, isModalOpen]);
   return modalRef;
 }

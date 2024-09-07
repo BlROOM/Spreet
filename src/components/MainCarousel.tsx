@@ -13,7 +13,7 @@ export default function MainCarousel() {
     const getSpreetCordinate = () => {
       if (!spreetRef.current) return;
       const listLeft = spreetRef.current.getBoundingClientRect().left;
-      console.log("listLeft", listLeft);
+      // console.log("listLeft", listLeft);
       setCaroselX(listLeft);
     };
 
