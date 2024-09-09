@@ -73,6 +73,11 @@ const config: Config = {
       },
     },
     extend: {
+      spacing: {
+        wide: "0.25em",
+        wider: "0.5em",
+        widest: "1em",
+      },
       boxShadow: {
         "custom-xxs":
           "0 0.5px 1px rgba(0, 0, 0, 0.25), 0 0 2px rgba(0, 0, 0, 0.25), 0 0 2px rgba(0, 0, 0, 0.15)",
@@ -85,8 +90,11 @@ const config: Config = {
         "custom-lg":
           "0 4px 8px rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.15)",
       },
-      animation: {
-        "move-skeleton": "move 2s linear infinite",
+      transitionDuration: {
+        "700": "700ms",
+        "800": "800ms",
+        "1000": "1000ms",
+        "1200": "1200ms",
       },
       keyframes: {
         move: {
@@ -97,6 +105,14 @@ const config: Config = {
             transform: "translateX(300%)",
           },
         },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateX(-50%)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        "move-skeleton": "move 2s linear infinite",
+        fadeIn: "fadeIn 0.8s ease-out forwards",
       },
     },
   },

@@ -26,7 +26,7 @@ export default function MainCarousel() {
   ];
 
   return (
-    <div className="w-full relative border border-black box-border">
+    <div className="w-full relative box-border">
       <div className="w-[1280px] m-auto relative overflow-hidden">
         <Image
           src="/images/blackLeftLarge.png"
