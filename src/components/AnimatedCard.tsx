@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
+import ExtendedLink from "./ExtendedLink";
 
 type AnimatedEventCard = {
   logo: StaticImageData; // 이미지 파일을 import한 경우
@@ -25,7 +25,7 @@ export default function AnimatedEventCard({
   className,
 }: AnimatedEventCard) {
   return (
-    <Link href={href}>
+    <ExtendedLink href={href}>
       <article ref={animationRef.elementRef} className={className}>
         <div className="flex">
           <Image
@@ -40,6 +40,6 @@ export default function AnimatedEventCard({
           </header>
         </div>
       </article>
-    </Link>
+    </ExtendedLink>
   );
 }
