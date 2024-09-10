@@ -58,7 +58,7 @@ const ScrollAnimationSection = () => {
   return (
     <section className="flex-col grid grid-rows-3 gap-6 p-8 text-grayscale-100">
       {animatedCardItems.map((card, index) => (
-        <AnimatedEventCard key={index} {...card} />
+        <AnimatedEventCard key={card.alt} {...card} />
       ))}
     </section>
   );

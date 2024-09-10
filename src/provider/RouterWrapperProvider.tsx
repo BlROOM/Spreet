@@ -1,12 +1,14 @@
 "use client";
 
 import { createContext, useState, useCallback, useContext } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import usePathNameStore from "@/store/usePathNameStore";
 
 export type NavigationDirection = "forward" | "backward";
 
 type RouterWrapperContextType = {
   direction: NavigationDirection;
+  currentPath: string;
   push: (url: string) => void;
   back: () => void;
 };
@@ -22,14 +24,31 @@ export function RouterWrapperProvider({
 }) {
   const [direction, setDirection] = useState<NavigationDirection>("forward");
   const router = useRouter();
+  const currentPath = usePathname();
+  const { addPath, hasVisited, removePath } = usePathNameStore();
 
   const push = useCallback(
     (url: string) => {
-      setDirection("forward");
-      router.push(url);
+      if (hasVisited(url)) {
+        setDirection("backward");
+        removePath(url);
+        router.push(url);
+      } else {
+        setDirection("forward");
+        addPath(url);
+        router.push(url);
+      }
     },
-    [router]
+    [router, addPath, hasVisited, removePath]
   );
+
+  // const push = useCallback(
+  //   (url: string) => {
+  //     setDirection("forward");
+  //     router.push(url);
+  //   },
+  //   [router]
+  // );
 
   const back = useCallback(() => {
     setDirection("backward");
@@ -37,7 +56,9 @@ export function RouterWrapperProvider({
   }, [router]);
 
   return (
-    <RouterWrapperContext.Provider value={{ direction, push, back }}>
+    <RouterWrapperContext.Provider
+      value={{ direction, push, back, currentPath }}
+    >
       {children}
     </RouterWrapperContext.Provider>
   );

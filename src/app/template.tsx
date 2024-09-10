@@ -10,7 +10,6 @@ import {
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { direction } = useRouterWrapper();
-
   return (
     <main className="relative justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
       <motion.div
@@ -32,7 +31,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </motion.div>
 
       <motion.div
-        key={"prev cache page"}
+        key={`cache-${pathname}`}
         custom={direction}
         variants={{
           center: {
@@ -51,7 +50,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         }}
       >
         {"caching page"}
-        {/* {children} */}
       </motion.div>
     </main>
   );

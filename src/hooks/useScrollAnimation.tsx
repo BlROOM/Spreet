@@ -22,8 +22,8 @@ const useScrollAnimation = () => {
       threshold: 0.1,
     };
 
-    const element = elementRef.current;
-    console.log("---element", element, isVisible);
+    // const element = elementRef.current;
+    // console.log("---element", element, isVisible);
 
     const observer = new IntersectionObserver(handleIntersection, options);
 

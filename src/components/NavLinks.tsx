@@ -1,9 +1,8 @@
-"use client";
-
 import {
   CLASS_PATHNAME,
   EVENT_PATHNAME,
   MAIN_PATHNAME,
+  SOCIAL_PATHNAME,
 } from "@/constants/path";
 import ExtendedLink from "./ExtendedLink";
 import Logo from "@/assets/logos/spreet.svg";
@@ -17,12 +16,15 @@ export default function NavLinks() {
         </ExtendedLink>
       </figure>
       <nav className="mr-6">
-        <ul className="flex gap-3 text-lg tracking-wide font-semibold">
+        <ul className="flex gap-8 text-lg tracking-wide font-semibold">
           <li>
             <ExtendedLink href={EVENT_PATHNAME}>행사</ExtendedLink>
           </li>
           <li>
             <ExtendedLink href={CLASS_PATHNAME}>강의</ExtendedLink>
+          </li>
+          <li>
+            <ExtendedLink href={SOCIAL_PATHNAME}>소셜</ExtendedLink>
           </li>
         </ul>
       </nav>

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { useRouterWrapper } from "@/provider/RouterWrapperProvider";
 
@@ -13,12 +14,20 @@ export default function ExtendedLink({
   className,
 }: ExtendedLink) {
   const router = useRouterWrapper();
+
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    if (router.currentPath === href) return;
     router.push(href);
   };
   return (
-    <Link className={`link ${className}`} onClick={onClick} href="#">
+    <Link
+      className={`link ${className} ${
+        href === router.currentPath && "text-redpoint-500"
+      }`}
+      onClick={onClick}
+      href="#"
+    >
       {children}
     </Link>
   );

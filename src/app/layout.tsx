@@ -29,12 +29,12 @@ export default function RootLayout({
         className={`${pretendard.className} bg-grayscale-900 overflow-x-hidden`}
       >
         <RouterWrapperProvider>
-          {/* <AnimationProvider> */}
-          <Header />
-          {children}
-          <div id="root-modal"></div>
-          <LoginModal />
-          {/* </AnimationProvider> */}
+          <AnimationProvider>
+            <Header />
+            {children}
+            <div id="root-modal"></div>
+            <LoginModal />
+          </AnimationProvider>
         </RouterWrapperProvider>
       </body>
     </html>
