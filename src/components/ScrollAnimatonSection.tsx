@@ -4,6 +4,11 @@ import eventLogo from "@/assets/logos/event.png";
 import classLogo from "@/assets/logos/class.jpg";
 import socialLogo from "@/assets/logos/social.jpg";
 import AnimatedEventCard from "./AnimatedCard";
+import {
+  CLASS_PATHNAME,
+  EVENT_PATHNAME,
+  SOCIAL_PATHNAME,
+} from "@/constants/path";
 const ScrollAnimationSection = () => {
   const eventAnimation = useScrollAnimation();
   const lectureAnimation = useScrollAnimation();
@@ -13,7 +18,7 @@ const ScrollAnimationSection = () => {
     {
       logo: eventLogo,
       alt: "event image",
-      href: "/event",
+      href: EVENT_PATHNAME,
       animationRef: eventAnimation,
       title: "행사",
       content:
@@ -23,7 +28,7 @@ const ScrollAnimationSection = () => {
     {
       logo: classLogo,
       alt: "class image",
-      href: "/class",
+      href: CLASS_PATHNAME,
       animationRef: lectureAnimation,
       title: "강의/워크숍",
       content:
@@ -37,7 +42,7 @@ const ScrollAnimationSection = () => {
     {
       logo: socialLogo,
       alt: "social image",
-      href: "/social",
+      href: SOCIAL_PATHNAME,
       animationRef: socialAnimation,
       title: "소셜",
       content:

@@ -32,7 +32,7 @@ export const useSupabase = () => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    console.log("-----user----", user);
+    // console.log("-----user----", user);
 
     const setSignIn = useAuthStore.getState().setSignIn;
     setSignIn(!!user);

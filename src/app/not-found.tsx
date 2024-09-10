@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Button from "@/components/shared/Button";
+import { MAIN_PATHNAME } from "@/constants/path";
 export default async function NotFound() {
   return (
     <main className="w-full min-h-dvh flex justify-center items-center bg-grayscale-900">
@@ -9,7 +10,7 @@ export default async function NotFound() {
           죄송합니다. <br />
           해당 페이지를 찾을 수 없습니다.
         </p>
-        <Link href="/">
+        <Link href={MAIN_PATHNAME}>
           <Button className="w-96 h-12 bg-redpoint-800  rounded-lg">
             홈으로
           </Button>

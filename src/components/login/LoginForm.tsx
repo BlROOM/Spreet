@@ -13,6 +13,7 @@ import LoadingSpinner from "../loading/LoadingSpinner";
 import useLoadingStore from "@/store/useLoading";
 import Script from "next/script";
 import KakaoLogo from "@/assets/icons/kakao_logo.svg";
+import { KAKAKO_CDN_PATHNAME, ROUTE_API_PATHNAME } from "@/constants/path";
 
 type LoginForm = {
   onSignupClick: () => void;
@@ -47,7 +48,7 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
     formData.append("password", data.password);
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${ROUTE_API_PATHNAME}login`, {
         method: "POST",
         body: formData,
       });
@@ -164,7 +165,7 @@ export default function LoginForm({ onSignupClick }: LoginForm) {
           </div>
 
           <Script
-            src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
+            src={KAKAKO_CDN_PATHNAME}
             integrity="..."
             crossOrigin="anonymous"
             onLoad={() => {
