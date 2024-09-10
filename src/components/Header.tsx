@@ -9,7 +9,7 @@ export default async function Header() {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
   return (
-    <header className="w-full py-4 flex justify-center border-b-2 border-grayscale-700 text-grayscale-100">
+    <header className="fixed z-50 w-full py-4 flex justify-center text-grayscale-100 bg-[#111111] ">
       <div className="w-[1280px] mx-auto px-2 flex align-middle justify-between items-center">
         <figure className="flex flex-col gap-y-1 text-sm tracking-wide font-serif">
           <Link href="/" className="w-32 h-16 pt-2">

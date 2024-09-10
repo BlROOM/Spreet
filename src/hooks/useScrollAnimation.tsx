@@ -18,7 +18,7 @@ const useScrollAnimation = () => {
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: "300px 0px 0px 0px",
+      rootMargin: "500px",
       threshold: 0.1,
     };
 

@@ -30,7 +30,7 @@ export default function MainCarousel() {
       <div className="w-[1280px] m-auto relative overflow-hidden">
         <Image
           src="/images/blackLeftLarge.png"
-          className="cursor-pointer bg-inherit w-15 h-25 text-7xl text-white absolute flex justify-center items-center z-50 top-1/2 transform -translate-y-1/2 "
+          className="cursor-pointer bg-inherit w-15 h-25 text-7xl text-white absolute flex justify-center items-center z-30 top-1/2 transform -translate-y-1/2 "
           alt="leftArrow"
           width={50}
           height={30}
@@ -48,7 +48,7 @@ export default function MainCarousel() {
         />
         <Image
           src="/images/blackRightSmall.png"
-          className="cursor-pointer bg-inherit w-15 h-25 text-[100px] text-white absolute flex justify-center items-center z-50 top-1/2 transform -translate-y-1/2 right-0 m-0 pointer-events-auto"
+          className="cursor-pointer bg-inherit w-15 h-25 text-[100px] text-white absolute flex justify-center items-center z-30 top-1/2 transform -translate-y-1/2 right-0 m-0 pointer-events-auto"
           alt="rightArrow"
           width={50}
           height={30}

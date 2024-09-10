@@ -36,7 +36,7 @@ export default function AnimatedEventCard({
           />
           <header className="text-center w-1/2 p-10">
             <h4 className="h4 mb-8 tracking-wide">{title}</h4>
-            <p className="b2">{content}</p>
+            <p className="b2 whitespace-pre-line">{content}</p>
           </header>
         </div>
       </article>
