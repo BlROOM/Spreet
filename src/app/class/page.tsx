@@ -1,7 +1,10 @@
-export default function Class() {
+import Class from "@/components/Class";
+
+export default function ClassPage() {
   return (
-    <main className="relative flex justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
-      강의/워크숍 페이지
-    </main>
+    // <main className="relative flex justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
+    //   강의/워크숍 페이지
+    // </main>
+    <Class />
   );
 }

@@ -1,12 +1,5 @@
-import MainCarousel from "@/components/MainCarousel";
-import ScrollAnimationSection from "@/components/ScrollAnimatonSection";
+import Main from "@/components/main/Main";
 
 export default function Home() {
-  return (
-    <>
-      <MainCarousel />
-      {/* scroll animation section */}
-      <ScrollAnimationSection />
-    </>
-  );
+  return <Main />;
 }

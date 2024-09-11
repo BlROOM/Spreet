@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useState, useCallback, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+} from "react";
 import { usePathname, useRouter } from "next/navigation";
 import usePathNameStore from "@/store/usePathNameStore";
 
@@ -10,7 +16,8 @@ type RouterWrapperContextType = {
   direction: NavigationDirection;
   currentPath: string;
   push: (url: string) => void;
-  back: () => void;
+  back: (url: string) => void;
+  prevPath: string;
 };
 
 const RouterWrapperContext = createContext<RouterWrapperContextType | null>(
@@ -25,7 +32,23 @@ export function RouterWrapperProvider({
   const [direction, setDirection] = useState<NavigationDirection>("forward");
   const router = useRouter();
   const currentPath = usePathname();
-  const { addPath, hasVisited, removePath } = usePathNameStore();
+  const { addPath, hasVisited, removePath, setPrevPath, prevPath } =
+    usePathNameStore();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storage = window.sessionStorage;
+
+      // 이전 경로 가져오기
+      const storedPrevPath = storage.getItem("currentPath") || "/";
+      setPrevPath(storedPrevPath);
+
+      // 현재 경로 저장
+      storage.setItem("prevPath", storedPrevPath);
+      storage.setItem("currentPath", window.location.pathname);
+    }
+  }, [currentPath, setPrevPath]);
+  // 이전 경로 가져오기
 
   const push = useCallback(
     (url: string) => {
@@ -42,22 +65,17 @@ export function RouterWrapperProvider({
     [router, addPath, hasVisited, removePath]
   );
 
-  // const push = useCallback(
-  //   (url: string) => {
-  //     setDirection("forward");
-  //     router.push(url);
-  //   },
-  //   [router]
-  // );
-
-  const back = useCallback(() => {
-    setDirection("backward");
-    router.back();
-  }, [router]);
+  const back = useCallback(
+    (url: string) => {
+      setDirection("backward");
+      router.back();
+    },
+    [router]
+  );
 
   return (
     <RouterWrapperContext.Provider
-      value={{ direction, push, back, currentPath }}
+      value={{ direction, push, back, currentPath, prevPath }}
     >
       {children}
     </RouterWrapperContext.Provider>

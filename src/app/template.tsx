@@ -6,10 +6,21 @@ import {
   NavigationDirection,
   useRouterWrapper,
 } from "@/provider/RouterWrapperProvider";
+import {
+  CLASS_PATHNAME,
+  EVENT_PATHNAME,
+  MAIN_PATHNAME,
+  SOCIAL_PATHNAME,
+} from "@/constants/path";
+import Main from "@/components/main/Main";
+import Class from "@/components/Class";
+import Social from "@/components/Social";
+import Event from "@/components/Event";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { direction } = useRouterWrapper();
+  const { direction, prevPath } = useRouterWrapper();
+  console.log("----prevPath", prevPath);
   return (
     <main className="relative justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
       <motion.div
@@ -49,7 +60,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
           width: "100vw",
         }}
       >
-        {"caching page"}
+        {prevPath === MAIN_PATHNAME && <Main />}
+        {prevPath === CLASS_PATHNAME && <Class />}
+        {prevPath === SOCIAL_PATHNAME && <Social />}
+        {prevPath === EVENT_PATHNAME && <Event />}
       </motion.div>
     </main>
   );

@@ -31,7 +31,7 @@ export default function LoginButton({ session }: LoginButton) {
   useEffect(() => {
     const fetchUserState = async () => {
       const user = await checkSignIn();
-      console.log("-----user로그인버튼----", user, session);
+      // console.log("-----user로그인버튼----", user, session);
       setLogin(!!user);
     };
     fetchUserState();

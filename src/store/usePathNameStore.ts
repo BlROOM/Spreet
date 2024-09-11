@@ -5,6 +5,8 @@ type PathNameState = {
   addPath: (pathName: string) => void;
   hasVisited: (pathName: string) => boolean;
   removePath: (pathName: string) => void;
+  prevPath: string;
+  setPrevPath: (pathName: string) => void;
 };
 
 const usePathNameStore = create<PathNameState>((set, get) => ({
@@ -20,6 +22,8 @@ const usePathNameStore = create<PathNameState>((set, get) => ({
     set((state) => ({
       visitedPaths: state.visitedPaths.filter((path) => path !== pathName),
     })),
+  prevPath: "/event",
+  setPrevPath: (pathName: string) => set({ prevPath: pathName }),
 }));
 
 export default usePathNameStore;
