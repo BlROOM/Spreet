@@ -3,6 +3,7 @@ import Image from "next/image";
 import handleClickSlide from "@/utils/handleClickSlide";
 
 import { useEffect, useRef, useState } from "react";
+import { li } from "framer-motion/client";
 
 export default function MainCarousel() {
   const spreetRef = useRef<HTMLDivElement>(null);
@@ -64,7 +65,7 @@ export default function MainCarousel() {
           }}
         />
         <div
-          className="relative w-[1920px] flex items-center transform translate-custom transition-transform duration-500 ease-in-out "
+          className="relative w-[1280px] flex items-center transform translate-custom transition-transform duration-500 ease-in-out "
           ref={spreetRef}
         >
           {carouselDataList.map((item, idx) => {
@@ -77,6 +78,18 @@ export default function MainCarousel() {
             );
           })}
         </div>
+        <ul className="absolute z-40 flex gap-x-4 bottom-4 left-1/2 transform -translate-x-1/2">
+          {carouselDataList.map((item, idx) => {
+            return (
+              <li
+                key={item}
+                className={`border-2 border-grayscale-100 w-5 h-5 rounded-full cursor-pointer  ${
+                  currentSlide === idx + 1 && "bg-grayscale-100"
+                }`}
+              />
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
