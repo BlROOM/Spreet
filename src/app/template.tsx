@@ -20,7 +20,7 @@ import Event from "@/components/Event";
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { direction, prevPath } = useRouterWrapper();
-  // console.log("----prevPath", prevPath);
+
   return (
     <main className="relative justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
       <motion.div

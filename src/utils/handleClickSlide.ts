@@ -1,14 +1,15 @@
 const handleClickSlide = (
   direction: "left" | "right",
   dataLength: number,
-  sectorRef: any,
+  sectorRef: React.RefObject<HTMLDivElement>,
   slideNum: number,
-  sectorTransX: any
+  sectorTransX: number
 ): any => {
-  if (!sectorRef) return;
+  if (!sectorRef.current) return;
   const currentX = sectorRef.current.getBoundingClientRect().x;
-  const listRef_NodeWidth =
-    sectorRef.current.childNodes[0].getBoundingClientRect().width;
+  const firstChild = sectorRef.current.childNodes[0] as HTMLElement;
+
+  const listRef_NodeWidth = firstChild.getBoundingClientRect().width;
   //슬라이드에 넣은 데이터 배열의 길이가 0보다 크다면
   //ref속성으로 이어진 돔요소 spreetRef에 childNode에 제일 첫번째
   //요소의 넓이값을 세팅
@@ -27,9 +28,9 @@ const handleClickSlide = (
 
     // calculate_distance = currentX + calculationValue
     calculate_distance = calculationValue;
-    console.log("현재calculate_distance", calculate_distance, sectorTransX);
+    // console.log("현재calculate_distance", calculate_distance, sectorTransX);
     if (sectorTransX < calculate_distance) {
-      console.log('left버튼"', sectorTransX, calculate_distance);
+      // console.log('left버튼"', sectorTransX, calculate_distance);
       calculate_distance = 0;
     }
     // if (-slideDistance > calculate_distance - calculationValue) {
@@ -51,12 +52,7 @@ const handleClickSlide = (
       calculate_distance = 0;
     }
   }
-  // console.log(
-  //   '현재 current',
-  //   currentX,
-  //   listRef_NodeWidth,
-  //   calculate_distance,
-  // );
+  // console.log("현재 current", currentX, listRef_NodeWidth, calculate_distance);
   sectorRef.current.style.transform = `translateX(${calculate_distance}px)`;
 };
 

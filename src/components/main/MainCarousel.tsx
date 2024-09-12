@@ -1,30 +1,24 @@
 "use client";
 import Image from "next/image";
 import handleClickSlide from "@/utils/handleClickSlide";
-
 import { useEffect, useRef, useState } from "react";
-import { li } from "framer-motion/client";
+import { carouselDataList } from "@/constants/carouselData";
+import handleDotClickSlide from "@/utils/handleDotClickSlide";
 
 export default function MainCarousel() {
   const spreetRef = useRef<HTMLDivElement>(null);
-  const [caroselX, setCaroselX] = useState<number>(0);
+  const [carouselX, setCarouselX] = useState<number>(0);
   const [currentSlide, setCurrentSlide] = useState(1);
-
   useEffect(() => {
     const getSpreetCordinate = () => {
       if (!spreetRef.current) return;
       const listLeft = spreetRef.current.getBoundingClientRect().left;
       // console.log("listLeft", listLeft);
-      setCaroselX(listLeft);
+      setCarouselX(listLeft);
     };
 
     getSpreetCordinate();
   }, []);
-  const carouselDataList = [
-    "/images/main1.jpg",
-    "/images/main3.jpg",
-    "/images/main4.jpg",
-  ];
 
   return (
     <div className="w-full relative box-border">
@@ -41,7 +35,7 @@ export default function MainCarousel() {
               carouselDataList.length,
               spreetRef,
               currentSlide,
-              caroselX
+              carouselX
             );
 
             setCurrentSlide((prev) => (prev > 0 ? prev - 1 : 0));
@@ -59,9 +53,9 @@ export default function MainCarousel() {
               carouselDataList.length,
               spreetRef,
               currentSlide,
-              caroselX
+              carouselX
             );
-            setCurrentSlide((prev) => (prev > 3 ? 1 : prev + 1));
+            setCurrentSlide((prev) => (prev >= 3 ? 1 : prev + 1));
           }}
         />
         <div
@@ -82,6 +76,20 @@ export default function MainCarousel() {
           {carouselDataList.map((item, idx) => {
             return (
               <li
+                onClick={() => {
+                  console.log(idx + 1, "누른버튼");
+                  const currentDot = idx + 1;
+                  setCurrentSlide(currentDot);
+                  // if (idx + 1 === currentSlide) {
+                  //   console.log("같음", idx + 1, currentSlide);
+                  //   return;
+                  // }
+                  handleDotClickSlide(
+                    carouselDataList.length,
+                    spreetRef,
+                    currentDot
+                  );
+                }}
                 key={item}
                 className={`border-2 border-grayscale-100 w-5 h-5 rounded-full cursor-pointer  ${
                   currentSlide === idx + 1 && "bg-grayscale-100"
