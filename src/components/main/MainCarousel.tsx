@@ -4,11 +4,14 @@ import handleClickSlide from "@/utils/handleClickSlide";
 import { useEffect, useRef, useState } from "react";
 import { carouselDataList } from "@/constants/carouselData";
 import handleDotClickSlide from "@/utils/handleDotClickSlide";
+import useDragCarousel from "@/hooks/useDragCarousel";
 
 export default function MainCarousel() {
   const spreetRef = useRef<HTMLDivElement>(null);
   const [carouselX, setCarouselX] = useState<number>(0);
   const [currentSlide, setCurrentSlide] = useState(1);
+  useDragCarousel(carouselDataList.length, spreetRef, setCurrentSlide);
+
   useEffect(() => {
     const getSpreetCordinate = () => {
       if (!spreetRef.current) return;
@@ -77,13 +80,8 @@ export default function MainCarousel() {
             return (
               <li
                 onClick={() => {
-                  console.log(idx + 1, "누른버튼");
                   const currentDot = idx + 1;
                   setCurrentSlide(currentDot);
-                  // if (idx + 1 === currentSlide) {
-                  //   console.log("같음", idx + 1, currentSlide);
-                  //   return;
-                  // }
                   handleDotClickSlide(
                     carouselDataList.length,
                     spreetRef,

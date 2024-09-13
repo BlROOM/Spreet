@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "@/assets/logos/Spreet.svg";
+import Logo from "@/assets/logos/spreet.svg";
 
 export default function LoadingSpinner() {
   return (
