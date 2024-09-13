@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const nickname = formData.get("nickname") as string;
-    const provider = formData.get("provider") as string;
+    const provider = (formData.get("provider") as string) || "";
 
     //유효성 검사 필드 정의
     const requiredFields = ["email", "password", "nickname"];
@@ -67,6 +67,7 @@ export async function POST(req: NextRequest) {
       );
     }
     const origin = req.headers.get("origin");
+    // console.log(email, password, nickname, provider);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
