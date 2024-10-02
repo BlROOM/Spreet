@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const useDragCarousel = (
   carouselLength: number,
@@ -10,14 +10,18 @@ const useDragCarousel = (
   const [startPosition, setStartPosition] = useState(0);
   const [endPosition, setEndPosition] = useState(0);
   const ITEM_WIDTH = 1280; // 각 아이템의 너비
-  const moveTowardX = (movedDistance: number) => {
-    const totalCarouselWidth = ITEM_WIDTH * carouselLength;
-    const [minPosition, maxPosition] = [-totalCarouselWidth + ITEM_WIDTH, 0];
 
-    if (movedDistance < minPosition) return minPosition;
-    if (movedDistance > maxPosition) return maxPosition;
-    return movedDistance;
-  };
+  const moveTowardX = useCallback(
+    (movedDistance: number) => {
+      const totalCarouselWidth = ITEM_WIDTH * carouselLength;
+      const [minPosition, maxPosition] = [-totalCarouselWidth + ITEM_WIDTH, 0];
+
+      if (movedDistance < minPosition) return minPosition;
+      if (movedDistance > maxPosition) return maxPosition;
+      return movedDistance;
+    },
+    [carouselLength]
+  );
 
   const snapToClosestItem = (movedDistance: number) => {
     // 가장 가까운 아이템 위치로 이동
@@ -26,45 +30,61 @@ const useDragCarousel = (
     return closestItemPosition;
   };
 
-  const updateCurrentSlide = (position: number) => {
-    const slideIndex = Math.round(-position / ITEM_WIDTH) + 1;
-    setCurrentSlide(slideIndex);
-  };
+  const updateCurrentSlide = useCallback(
+    (position: number) => {
+      const slideIndex = Math.round(-position / ITEM_WIDTH) + 1;
+      setCurrentSlide(slideIndex);
+    },
+    [setCurrentSlide]
+  );
 
-  const handleMouseDown = (event: MouseEvent) => {
+  const handleMouseDown = useCallback((event: MouseEvent) => {
     event.preventDefault();
     setStartPosition(event.clientX);
     setIsDragging(true);
-  };
+  }, []);
 
-  const handleMouseMove = (event: MouseEvent) => {
-    if (!isDragging) return;
-    const movedDistance = moveTowardX(
-      endPosition - startPosition + event.clientX
-    );
-    if (ref.current)
-      ref.current.style.transform = `translateX(${movedDistance}px)`;
-  };
+  const handleMouseMove = useCallback(
+    (event: MouseEvent) => {
+      if (!isDragging) return;
+      const movedDistance = moveTowardX(
+        endPosition - startPosition + event.clientX
+      );
+      if (ref.current)
+        ref.current.style.transform = `translateX(${movedDistance}px)`;
+    },
+    [endPosition, isDragging, moveTowardX, ref, startPosition]
+  );
 
-  const handleMouseUp = (event: MouseEvent) => {
-    if (!isDragging) return;
+  const handleMouseUp = useCallback(
+    (event: MouseEvent) => {
+      if (!isDragging) return;
 
-    const currentMousePosition = event.clientX;
-    // 드래그 후 이동 거리 계산
-    const movedDistance = moveTowardX(
-      endPosition + (currentMousePosition - startPosition)
-    ); // 드래그 후 이동 거리 계산
+      const currentMousePosition = event.clientX;
+      // 드래그 후 이동 거리 계산
+      const movedDistance = moveTowardX(
+        endPosition + (currentMousePosition - startPosition)
+      ); // 드래그 후 이동 거리 계산
 
-    const closestItemPosition = snapToClosestItem(movedDistance); // 가장 가까운 아이템 위치로 정렬
-    setEndPosition(closestItemPosition);
+      const closestItemPosition = snapToClosestItem(movedDistance); // 가장 가까운 아이템 위치로 정렬
+      setEndPosition(closestItemPosition);
 
-    if (ref.current) {
-      ref.current.style.transform = `translateX(${closestItemPosition}px)`;
-    }
-    updateCurrentSlide(closestItemPosition);
+      if (ref.current) {
+        ref.current.style.transform = `translateX(${closestItemPosition}px)`;
+      }
+      updateCurrentSlide(closestItemPosition);
 
-    setIsDragging(false);
-  };
+      setIsDragging(false);
+    },
+    [
+      endPosition,
+      isDragging,
+      moveTowardX,
+      ref,
+      startPosition,
+      updateCurrentSlide,
+    ]
+  );
 
   useEffect(() => {
     const carouselItems = ref.current;
@@ -81,7 +101,7 @@ const useDragCarousel = (
       window?.removeEventListener("mousemove", handleMouseMove);
       window?.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging]);
+  }, [handleMouseMove, handleMouseUp, handleMouseDown, ref]);
 
   return {};
 };
