@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CLASS_PATHNAME,
   EVENT_PATHNAME,
