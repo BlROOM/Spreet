@@ -7,7 +7,7 @@ export const SOCIAL_PATHNAME = "/social";
 export const EVENT_PATHNAME = "/event/performances";
 
 export const navItems = [
-  { id: "performance", label: "공연", path: "/performances" },
+  { id: "performance", label: "공연", path: "/event/performances" },
   { id: "battle", label: "배틀", path: "/battles" },
   { id: "exhibitions", label: "전시회", path: "/exhibitions" },
 ];

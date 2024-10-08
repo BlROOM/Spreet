@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import Button from "@/components/shared/Button";
 import { MAIN_PATHNAME } from "@/constants/path";
