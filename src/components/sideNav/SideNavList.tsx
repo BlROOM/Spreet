@@ -5,7 +5,7 @@ type SidebarList = {
 };
 export default function SidebarList({ children }: SidebarList) {
   return (
-    <aside className="table-cell w-[180px] align-top max-w-[180px]">
+    <aside className="table-cell w-[300px] align-top max-w-[300px]">
       <nav>
         <ul>{children}</ul>
       </nav>
