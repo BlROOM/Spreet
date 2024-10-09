@@ -8,7 +8,11 @@ const nextConfig = {
 
     return config;
   },
-  images: { remotePatterns: [], formats: ["image/avif", "image/webp"] },
+  images: {
+    remotePatterns: [],
+    formats: ["image/avif", "image/webp"],
+    domains: ["img.daisyui.com"],
+  },
 };
 
 export default nextConfig;
