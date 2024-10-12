@@ -5,5 +5,5 @@ type PostTitle = {
 };
 
 export default function PostTitle({ children }: PostTitle) {
-  return <h4 className="text-lg text-grayscale-100">{children}</h4>;
+  return <h2 className="text-2xg text-grayscale-100">{children}</h2>;
 }

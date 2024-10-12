@@ -7,7 +7,7 @@ type PostAuthor = {
   location: string;
 };
 
-export default function PostAuthor({
+export default function CardAuthor({
   name,
   date,
   location,

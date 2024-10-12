@@ -1,12 +1,14 @@
-import PostTitle from "./PostTitle";
+import PostPrice from "./PostPrice";
+import PostImg from "./PostImg";
 import PostMain from "./PostMain";
-import PostImage from "./PostImg";
-import PostAuthor from "./PostAuthor";
+import PostTitle from "./PostTitle";
+import PostInfoItem from "./PostInfoItem";
 
 const Post = Object.assign(PostMain, {
-  Img: PostImage,
+  Img: PostImg,
   Title: PostTitle,
-  Author: PostAuthor,
+  InfoItem: PostInfoItem,
+  Price: PostPrice,
 });
 
 export default Post;

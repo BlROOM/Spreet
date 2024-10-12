@@ -7,6 +7,29 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xxs: "320px", // Extra small devices (phones, 320px and up)
+      xs: "480px", // Small devices (phones, 480px and up)
+      sm: "640px", // Small devices (tablets, 640px and up)
+      md: "768px", // Medium devices (tablets, 768px and up)
+      lg: "1024px", // Large devices (desktops, 1024px and up)
+      xl: "1280px", // Extra large devices (large desktops, 1280px and up)
+      "2xl": "1600px", // 2xl devices (extra large screens, 1600px and up)
+      "3xl": "1920px", // 3xl devices (large screens, 1920px and up)
+    },
+    height: {
+      "screen-90": "90vh",
+      "screen-85": "85vh",
+      "screen-80": "80vh",
+      "screen-70": "70vh",
+      "screen-75": "75vh",
+      "screen-65": "65vh",
+      "screen-60": "60vh",
+      "screen-50": "50vh",
+      "screen-40": "40vh",
+      "screen-30": "30vh",
+      "screen-20": "20vh",
+    },
     colors: {
       primary: {
         50: "#E6E9EF",
