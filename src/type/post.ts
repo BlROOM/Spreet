@@ -1,4 +1,5 @@
-export type Post = {
+export type TPost = {
+  id: number;
   title: string; // 제목
   host: string; // 주최
   location: string; // 장소

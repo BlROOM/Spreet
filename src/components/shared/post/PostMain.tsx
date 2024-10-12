@@ -1,9 +1,18 @@
-import { Post } from "@/type/post";
-import { createContext, ReactNode, useContext } from "react";
+"use client";
+
+import { TPost } from "@/type/post";
+import { postData } from "@/constants/postData";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type PostContext = {
-  post: Post[];
-  setPost: (poost: Post) => void;
+  post: TPost[];
+  setPost: (poost: TPost[]) => void;
 };
 
 type PostMain = {
@@ -12,7 +21,16 @@ type PostMain = {
 
 export const PostContext = createContext<PostContext | null>(null);
 export default function PostMain({ children }: PostMain) {
-  return <PostContext.Provider value={null}>{children}</PostContext.Provider>;
+  const [post, setPost] = useState<TPost[]>([]);
+  useEffect(() => {
+    if (!postData) return;
+    setPost([...postData]);
+  }, []);
+  return (
+    <PostContext.Provider value={{ post, setPost }}>
+      {children}
+    </PostContext.Provider>
+  );
 }
 
 export const usePost = () => {
