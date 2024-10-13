@@ -1,5 +1,4 @@
 "use client";
-
 import { TPost } from "@/type/post";
 import { postData } from "@/constants/postData";
 import {

@@ -38,7 +38,7 @@ export function RouterWrapperProvider({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storage = window.sessionStorage;
-
+      console.log(window.location.pathname);
       // 이전 경로 가져오기
       const storedPrevPath = storage.getItem("currentPath") || "/";
       setPrevPath(storedPrevPath);

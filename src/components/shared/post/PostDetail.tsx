@@ -1,23 +1,20 @@
-import Post from "./inddex";
-import { usePost } from "@/components/shared/post/PostMain";
-import PostMain from "@/components/shared/post/inddex";
+"use client";
+import React from "react";
 import { TPost } from "@/type/post";
-import { useParams } from "next/navigation";
+import Post from ".";
 
-export default function PostDetail() {
-  const { post } = usePost();
-  const router = useParams();
-  console.log(router);
-  // ID에 해당하는 post 찾기
-  // const selectedPost = post.find((p: TPost) => p.id === Number(id));
+type PostDetail = {
+  post: TPost;
+};
 
-  // if (!selectedPost) {
-  //   return <div>포스트를 찾을 수 없습니다.</div>;
-  // }
+export default function PostDetail({ post }: PostDetail) {
   return (
     <>
-      <div></div>
-      {/* <Post.Img></Post.Img> */}
+      <Post.Img src={post.image} alt={post.title} /> {/* 이미지 */}
+      <Post.Title>{post.title}</Post.Title> {/* 제목 */}
+      {/* <Post.InfoItem icon={ 아이콘 컴포넌트 }>{post.info}</Post.InfoItem> */}
+      {/* 추가 정보 */}
+      <Post.Price price={post.price} discount={post.discount} /> {/* 가격 */}
     </>
   );
 }

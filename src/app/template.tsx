@@ -17,13 +17,16 @@ import Main from "@/components/main/Main";
 import Class from "@/components/Class";
 import Social from "@/components/Social";
 import Event from "@/components/Event";
+import SideBar from "@/components/SideBar";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { direction, prevPath } = useRouterWrapper();
+  const isEventPage = pathname.startsWith("/event"); // event 경로 감지
 
   return (
-    <main className="relative justify-center flex-col gap-10 w-[1280px] m-auto pt-[96px]">
+    <main className="relative flex gap-10 w-[1280px] m-auto pt-[96px]">
+      {isEventPage && <SideBar />}
       <motion.div
         key={pathname}
         custom={direction}

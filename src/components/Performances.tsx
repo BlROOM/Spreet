@@ -1,11 +1,15 @@
-import { postData } from "@/constants/postData";
 import Link from "next/link";
-import Card from "../shared/card/inddex";
+import Card from "./shared/card/.";
+import { TPost } from "@/type/post";
 
-export default function Performances() {
+type Performances = {
+  dataList: TPost[];
+};
+
+export default function Performances({ dataList }: Performances) {
   return (
-    <Card>
-      {postData.map(({ id, title, date, location, host, image }, idx) => (
+    <>
+      {dataList.map(({ id, title, date, location, host, image }) => (
         <Link
           key={id}
           href={`/event/performances/${id}`}
@@ -16,6 +20,6 @@ export default function Performances() {
           <Card.Author date={date} name={host} location={location} />
         </Link>
       ))}
-    </Card>
+    </>
   );
 }
