@@ -5,5 +5,5 @@ type CardTitle = {
 };
 
 export default function CardTitle({ children }: CardTitle) {
-  return <h4 className="text-lg text-grayscale-100">{children}</h4>;
+  return <h4 className="text-lg text-grayscale-100 truncate">{children}</h4>;
 }

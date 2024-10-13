@@ -32,7 +32,7 @@ export default function AnimatedEventCard({
             src={logo}
             alt={alt}
             objectFit="cover"
-            className="w-1/2 h-60 rounded-2xl"
+            className="w-1/2 h-screen-40 rounded-2xl"
           />
           <header className="text-center w-1/2 p-10">
             <h4 className="h4 mb-8 tracking-wide">{title}</h4>

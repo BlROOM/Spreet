@@ -1,3 +1,5 @@
+"use client";
+
 import { navItems } from "@/constants/path";
 import { usePathname } from "next/navigation";
 import {
@@ -22,7 +24,7 @@ export default function SidebarMain({ children }: SideNavMain) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const currentItem = navItems.find((item) => item.path === pathname);
+    const currentItem = navItems.find((item) => pathname.includes(item.path));
     setSelectedItem(currentItem ? currentItem.id : null);
   }, [pathname]);
 

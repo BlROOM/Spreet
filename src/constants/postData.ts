@@ -1,9 +1,8 @@
-import formatDate from "@/utils/formatDate";
-
 export const postData = [
   {
     id: 1,
-    title: "2024 힙합 페스티벌",
+    title:
+      "2024 힙합 페스티벌 ㄷㅂ쟈돕재ㅗㄷ배 ㄷㅂㅈㄷㅂㅈㄷㅂㄷㅈㅂㄷㅂㅈ댜ㅕㅂㅈ듑ㅈ댜ㅕㅂㅈ뎌배",
     host: "힙합 레코드",
     location: "서울 올림픽공원",
     date: "2024.11.15",
@@ -20,7 +19,7 @@ export const postData = [
     price: 20000,
     discount: {
       discountedPrice: 16000,
-      description: "20% off",
+      description: "최대 20% 할인",
     },
   },
   {
@@ -42,7 +41,7 @@ export const postData = [
     price: 20000, // 이 속성이 TPost에 정의되어 있어야 함
     discount: {
       discountedPrice: 16000,
-      description: "20% off",
+      description: "최대 20% 할인",
     },
   },
   {
@@ -62,10 +61,7 @@ export const postData = [
     operatingHours: "오후 6시 ~ 새벽 2시",
     notice: "입장 시 신분증 확인이 필요합니다.",
     price: 20000,
-    discount: {
-      discountedPrice: 16000,
-      description: "20% off",
-    },
+    discount: undefined,
   },
   {
     id: 4,
@@ -84,10 +80,7 @@ export const postData = [
     operatingHours: "오후 6시 ~ 오후 8시",
     notice: "티켓 구매 시 음료가 포함됩니다.",
     price: 20000,
-    discount: {
-      discountedPrice: 16000,
-      description: "20% off",
-    },
+    discount: undefined,
   },
   {
     id: 5,
@@ -106,9 +99,6 @@ export const postData = [
     operatingHours: "오후 5시 ~ 오후 7시",
     notice: "좌석 예약 필수입니다. 공연 시작 30분 전 입장 바랍니다.",
     price: 20000,
-    discount: {
-      discountedPrice: 16000,
-      description: "20% off",
-    },
+    discount: undefined,
   },
 ];

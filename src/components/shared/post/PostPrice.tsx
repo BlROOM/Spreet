@@ -8,18 +8,21 @@ type PostPrice = {
 
 export default function PostPrice({ price, discount }: PostPrice) {
   return (
-    <div className="flex justify-between text-grayscale-100">
+    <div className="flex items-center justify-end text-grayscale-100">
       {discount ? (
         <>
-          <span className="text-sm text-gray-500">
+          <span className="text-lg text-gray-500 whitespace-pre-wrap">
             ({discount.description})
           </span>
-          <span className="font-bold text-redpoint-500">
-            {discount.discountedPrice} 원
-          </span>
+          <div className="flex items-center gap-4 ml-2">
+            <span className="text-lg line-through">{price} 원</span>
+            <span className="text-2xl font-bold text-redpoint-500 ">
+              {discount.discountedPrice} 원
+            </span>
+          </div>
         </>
       ) : (
-        <span className="font-bold">{price} 원</span>
+        <span className="text-2xl font-bold">{price} 원</span>
       )}
     </div>
   );

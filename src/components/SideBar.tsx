@@ -1,4 +1,3 @@
-"use client";
 import { navItems } from "@/constants/path";
 import SideNav from "./sideNav";
 
