@@ -8,7 +8,13 @@ type PostImg = {
   children?: ReactNode;
 };
 
-export default function PostImg({ src, alt, className, children }: PostImg) {
+export default function PostImg({
+  src,
+  alt,
+  className,
+  children,
+  ...props
+}: PostImg) {
   return (
     <div className="relative">
       <Image
@@ -17,6 +23,7 @@ export default function PostImg({ src, alt, className, children }: PostImg) {
         width={200}
         height={100}
         className={className}
+        {...props}
       />
       {children}
     </div>
