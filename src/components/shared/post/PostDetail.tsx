@@ -4,12 +4,25 @@ import { TPost } from "@/type/post";
 import Post from ".";
 import Wrapper from "../Wrapper";
 import { getPostInfoItems } from "@/data/postInfoItems";
+import { useQuery } from "@tanstack/react-query";
+import { getPerformanceById } from "@/app/service/getPerformances";
 
 type PostDetail = {
-  post: TPost;
+  id: string;
 };
 
-export default function PostDetail({ post }: PostDetail) {
+export default function PostDetail({ id }: PostDetail) {
+  const {
+    data: post,
+    error,
+    isLoading,
+  } = useQuery<TPost, Error>({
+    queryKey: ["performance"],
+    queryFn: () => getPerformanceById(id),
+  });
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !post) return <div>{(error as Error).message}</div>;
+
   const infoItems = getPostInfoItems(post);
 
   return (
@@ -35,7 +48,11 @@ export default function PostDetail({ post }: PostDetail) {
           </div>
         </div>
         <hr className="text-grayscale-400 w-full my-2" />
-        <Post.Price price={post.price} discount={post.discount} />
+        <Post.Price
+          price={post.price}
+          discountedPrice={post?.discountedPrice}
+          description={post.discountDescription}
+        />
       </Post.CoverImg>
     </Wrapper>
   );

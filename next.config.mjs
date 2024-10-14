@@ -11,7 +11,7 @@ const nextConfig = {
   images: {
     remotePatterns: [],
     formats: ["image/avif", "image/webp"],
-    domains: ["img.daisyui.com"],
+    domains: ["img.daisyui.com", "iouqlacqrsiycohsncou.supabase.co"],
   },
 };
 

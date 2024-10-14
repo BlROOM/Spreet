@@ -11,10 +11,8 @@ export type TPost = {
   duration: string; // 진행 기간
   ageRating: string; // 이용 등급
   operatingHours: string; // 운영 시간
-  notice: string; // 공지사항
+  notice?: string; // 공지사항 (선택적)
   price: number; // 기본 가격
-  discount?: {
-    discountedPrice: number; // 할인된 가격
-    description: string; // 할인 설명 (예: "30% 할인")
-  };
+  discountedPrice?: number; // 할인된 가격 (선택적)
+  discountDescription?: string; // 할인 설명 (선택적)
 };

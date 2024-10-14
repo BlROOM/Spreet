@@ -6,6 +6,7 @@ import LoginModal from "@/components/login/LoginModal";
 import localFont from "next/font/local";
 import { RouterWrapperProvider } from "@/provider/RouterWrapperProvider";
 import AnimationProvider from "@/provider/AnimationProvider";
+import QueryProviders from "@/provider/QueryProvider";
 
 // const notoSans = Noto_Sans({
 //   subsets: ["latin"],
@@ -28,14 +29,16 @@ export default function RootLayout({
       <body
         className={`${pretendard.className} bg-grayscale-900 overflow-x-hidden`}
       >
-        <RouterWrapperProvider>
-          <AnimationProvider>
-            <Header />
-            {children}
-            <div id="root-modal"></div>
-            <LoginModal />
-          </AnimationProvider>
-        </RouterWrapperProvider>
+        <QueryProviders>
+          <RouterWrapperProvider>
+            <AnimationProvider>
+              <Header />
+              {children}
+              <div id="root-modal"></div>
+              <LoginModal />
+            </AnimationProvider>
+          </RouterWrapperProvider>
+        </QueryProviders>
       </body>
     </html>
   );

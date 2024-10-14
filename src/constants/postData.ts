@@ -17,10 +17,8 @@ export const postData = [
     operatingHours: "오전 10시 ~ 오후 10시",
     notice: "우천 시에도 정상 진행됩니다. 티켓 환불은 불가합니다.",
     price: 20000,
-    discount: {
-      discountedPrice: 16000,
-      description: "최대 20% 할인",
-    },
+    discountedPrice: 16000,
+    description: "최대 20% 할인",
   },
   {
     id: 2,
@@ -38,11 +36,9 @@ export const postData = [
     ageRating: "전체 관람가",
     operatingHours: "오후 7시 ~ 오후 9시",
     notice: "선착순 입장입니다. 좌석은 지정되지 않습니다.",
-    price: 20000, // 이 속성이 TPost에 정의되어 있어야 함
-    discount: {
-      discountedPrice: 16000,
-      description: "최대 20% 할인",
-    },
+    price: 20000,
+    discountedPrice: 16000,
+    description: "최대 20% 할인",
   },
   {
     id: 3,
