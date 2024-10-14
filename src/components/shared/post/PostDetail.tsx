@@ -17,7 +17,7 @@ export default function PostDetail({ id }: PostDetail) {
     error,
     isLoading,
   } = useQuery<TPost, Error>({
-    queryKey: ["performance"],
+    queryKey: ["performance", id],
     queryFn: () => getPerformanceById(id),
   });
   if (isLoading) return <div>Loading...</div>;
@@ -26,21 +26,23 @@ export default function PostDetail({ id }: PostDetail) {
   const infoItems = getPostInfoItems(post);
 
   return (
-    <Wrapper className="w-full">
+    <Wrapper className="w-1/2">
       <Post.CoverImg src={post.image} alt={post.title}>
         <div className="flex gap-6">
           <Post.Img
+            width={250}
+            height={250}
             src={post.image}
             alt={post.title}
-            className="max-w-[280px] h-screen-30 rounded-lg relative"
+            className="h-screen-40 rounded-lg relative"
           />
-          <div className="flex flex-col gap-1 max-w-[200px]">
+          <div className="flex flex-col gap-2 w-1/2">
             <Post.Title>{post.title}</Post.Title>
             {infoItems.map((item, index) => (
               <Post.InfoItem
                 key={index}
                 icon={item.icon}
-                className={`${index === 0 ? "mt-1" : ""}`}
+                className={`${index === 0 ? "mt-2" : ""}`}
               >
                 {item.label}
               </Post.InfoItem>
@@ -50,8 +52,8 @@ export default function PostDetail({ id }: PostDetail) {
         <hr className="text-grayscale-400 w-full my-2" />
         <Post.Price
           price={post.price}
-          discountedPrice={post?.discountedPrice}
-          description={post.discountDescription}
+          discountedPrice={post?.discounted_price}
+          description={post.discount_description}
         />
       </Post.CoverImg>
     </Wrapper>

@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import Card from "./shared/card/.";
+import Card from "@/components/shared/card/.";
 import { useQuery } from "@tanstack/react-query";
 import { getPerformances } from "@/app/service/getPerformances";
 import { TPost } from "@/type/post";
+import formatDate from "@/utils/formatDate";
 
-export default function Performances() {
+export default function PerformancesList() {
   const { data, error, isLoading } = useQuery<TPost[]>({
     queryKey: ["performances"],
     queryFn: getPerformances,
@@ -19,11 +20,15 @@ export default function Performances() {
         <Link
           key={id}
           href={`/event/performances/${id}`}
-          className="flex flex-col mx-6 w-1/4"
+          className="flex flex-col m-5 w-3/12"
         >
           <Card.Title>{title}</Card.Title>
           <Card.Img src={image} alt={"Card 이미지"} />
-          <Card.Author date={date} name={host} location={location} />
+          <Card.Author
+            date={formatDate(date)}
+            name={host}
+            location={location}
+          />
         </Link>
       ))}
     </>

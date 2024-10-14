@@ -15,8 +15,8 @@ import {
 import Main from "@/components/main/Main";
 import Class from "@/components/Class";
 import Social from "@/components/Social";
-import Event from "@/components/Event";
 import SideBar from "@/components/SideBar";
+import Performance from "./event/performances/page";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -40,6 +40,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         initial={"enter"}
         animate={"center"}
         transition={{ duration: 1, ease: "easeInOut" }}
+        className="w-full"
       >
         {children}
       </motion.div>
@@ -66,7 +67,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         {prevPath === MAIN_PATHNAME && <Main />}
         {prevPath === CLASS_PATHNAME && <Class />}
         {prevPath === SOCIAL_PATHNAME && <Social />}
-        {prevPath === EVENT_PATHNAME && <Event />}
+        {prevPath === EVENT_PATHNAME && <Performance />}
       </motion.div>
     </main>
   );

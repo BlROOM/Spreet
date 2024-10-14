@@ -5,14 +5,13 @@ export type TPost = {
   location: string; // 장소
   date: string; // 일시
   genre: string; // 장르
-  admissionFee: number; // 관람비/참가비
   content: string; // 내용
   image: string; // 이미지 URL
   duration: string; // 진행 기간
-  ageRating: string; // 이용 등급
-  operatingHours: string; // 운영 시간
+  age_rating: string; // 이용 등급
+  operating_hours: string; // 운영 시간
   notice?: string; // 공지사항 (선택적)
   price: number; // 기본 가격
-  discountedPrice?: number; // 할인된 가격 (선택적)
-  discountDescription?: string; // 할인 설명 (선택적)
+  discounted_price?: number; // 할인된 가격 (선택적)
+  discount_description?: string; // 할인 설명 (선택적)
 };

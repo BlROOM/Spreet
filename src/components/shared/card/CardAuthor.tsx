@@ -15,9 +15,9 @@ export default function CardAuthor({
 }: PostAuthor) {
   return (
     <div className="text-base text-grayscale-500 flex flex-col ">
-      <p>주최자: {name}</p>
-      <p>일시: {date}</p>
-      <p>장소: {location}</p>
+      <p className="truncate">주최자: {name}</p>
+      <p className="truncate">일시: {date}</p>
+      <p className="truncate">장소: {location}</p>
       {children}
     </div>
   );

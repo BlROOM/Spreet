@@ -15,7 +15,7 @@ export default function PostInfoItem({
   return (
     <div className={`flex gap-2 items-center text-grayscale-100 ${className}`}>
       <Icon />
-      <p className="text-md">{children}</p>
+      <p className="text-md whitespace-nowrap">{children}</p>
     </div>
   );
 }
