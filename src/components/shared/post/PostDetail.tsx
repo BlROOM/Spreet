@@ -5,7 +5,7 @@ import Post from ".";
 import Wrapper from "../Wrapper";
 import { getPostInfoItems } from "@/data/postInfoItems";
 import { useQuery } from "@tanstack/react-query";
-import { getPerformanceById } from "@/app/service/getPerformances";
+import { getPerformanceById } from "@/app/server/getPerformances";
 
 type PostDetail = {
   id: string;

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Card from "@/components/shared/card/.";
 import { useQuery } from "@tanstack/react-query";
-import { getPerformances } from "@/app/service/getPerformances";
+import { getPerformances } from "@/app/server/getPerformances";
 import { TPost } from "@/type/post";
 import formatDate from "@/utils/formatDate";
 
