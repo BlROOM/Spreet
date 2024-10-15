@@ -15,3 +15,12 @@ export type TPost = {
   discounted_price?: number; // 할인된 가격 (선택적)
   discount_description?: string; // 할인 설명 (선택적)
 };
+
+export type TPostResponse = {
+  data: TPost[];
+  meta: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
+};
