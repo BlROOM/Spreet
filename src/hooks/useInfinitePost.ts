@@ -4,7 +4,7 @@ import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 export const useInfinitePostQuery = () => {
   return useInfiniteQuery<TPostResponse, Error, InfiniteData<TPostResponse>>({
-    queryKey: ["performances"],
+    queryKey: ["events"],
     queryFn: ({ pageParam }) => getPerformances(pageParam as number),
     getNextPageParam: (lastPage) => {
       const {

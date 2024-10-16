@@ -1,4 +1,3 @@
-// app/performances/layout.tsx
 import { getPerformances } from "@/app/server/getPerformances";
 import {
   dehydrate,
@@ -9,13 +8,13 @@ import {
 export default async function Layout({ children }: React.PropsWithChildren) {
   const queryClient = new QueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["performances"],
+    queryKey: ["events"],
     queryFn: ({ pageParam }) => getPerformances(pageParam as number),
     initialPageParam: 1,
     staleTime: 1000 * 60 * 5,
   });
   const dehydratedState = dehydrate(queryClient);
-
+  console.log(dehydratedState);
   return (
     <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
   );

@@ -1,9 +1,9 @@
-import SidebarItem from "./SideNavItem";
 import SidebarList from "./SideNavList";
 import SidebarMain from "./SideNavMain";
+import SideBarItem from "./SideNavItem";
 
 const SideNav = Object.assign(SidebarMain, {
-  item: SidebarItem,
+  item: SideBarItem,
   List: SidebarList,
 });
 

@@ -1,4 +1,3 @@
-// pages/api/performances/[id].ts
 import prisma from "@/utils/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,8 +7,8 @@ export async function GET(
 ) {
   const { id } = params;
   try {
-    const performance = await prisma.performance.findUnique({
-      where: { id: Number(id) },
+    const performance = await prisma.events.findUnique({
+      where: { id: id },
     });
 
     if (!performance) {
