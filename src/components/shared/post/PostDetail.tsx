@@ -4,7 +4,7 @@ import { TPost } from "@/type/post";
 import Post from ".";
 import Wrapper from "../Wrapper";
 import { getPostInfoItems } from "@/data/postInfoItems";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPerformanceById } from "@/app/server/getPerformances";
 
 type PostDetail = {
@@ -12,15 +12,28 @@ type PostDetail = {
 };
 
 export default function PostDetail({ id }: PostDetail) {
+  const queryClient = useQueryClient();
+
+  // 리스트에서 캐싱된 데이터 가져오기 (없으면 undefined 반환)
+  const cachedData = queryClient.getQueryData<TPost>(["performance", id]);
+
   const {
     data: post,
     error,
     isLoading,
+    isFetching,
   } = useQuery<TPost, Error>({
     queryKey: ["performance", id],
     queryFn: () => getPerformanceById(id),
+    initialData: cachedData, // 캐시된 데이터를 먼저 사용
+    staleTime: 1000 * 60 * 5,
   });
-  if (isLoading) return <div>Loading...</div>;
+
+  if (isLoading || !cachedData) {
+    return (
+      <div className="w-[100vw] h-[100vh] text-grayscale-100">Loading...</div>
+    );
+  }
   if (error || !post) return <div>{(error as Error).message}</div>;
 
   const infoItems = getPostInfoItems(post);

@@ -19,7 +19,7 @@ export default function PostCoverImage({
       {...props}
     >
       <div className="bg-grayscale-800 absolute w-full h-[100%] top-0 opacity-75" />
-      <div className="absolute flex flex-col bottom-2 z-50 p-4">{children}</div>
+      <div className="absolute flex flex-col bottom-2 z-10 p-4">{children}</div>
     </PostImg>
   );
 }

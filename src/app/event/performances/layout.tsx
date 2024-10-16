@@ -15,7 +15,6 @@ export default async function Layout({ children }: React.PropsWithChildren) {
     staleTime: 1000 * 60 * 5,
   });
   const dehydratedState = dehydrate(queryClient);
-  // console.log(queryClient.getQueryState(["performances"]));
 
   return (
     <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>

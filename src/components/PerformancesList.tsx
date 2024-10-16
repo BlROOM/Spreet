@@ -16,7 +16,6 @@ export default function PerformancesList() {
     hasNextPage,
     isFetchingNextPage,
   });
-
   return (
     <>
       {data?.pages.map((page) =>

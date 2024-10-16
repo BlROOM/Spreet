@@ -7,7 +7,7 @@ export default async function Header() {
   const { data: sessionData, error: sessionError } =
     await supabase.auth.getSession();
   return (
-    <header className="fixed z-50 w-full py-4 flex justify-center text-grayscale-100 bg-[#111111] ">
+    <header className="fixed z-50 w-full py-4 flex justify-center text-grayscale-100 bg-[#111111]">
       <div className="w-[1280px] mx-auto px-2 flex align-middle justify-between items-center text-lg tracking-wide font-semibold">
         <NavLinks />
         <LoginButton session={sessionData.session} />
