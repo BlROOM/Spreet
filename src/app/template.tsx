@@ -22,7 +22,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { direction, prevPath } = useRouterWrapper();
   const isEventPage = pathname.startsWith("/event"); // event 경로 감지
-
   return (
     <main className="relative flex gap-10 w-[1280px] m-auto pt-[96px]">
       {isEventPage && <SideBar />}

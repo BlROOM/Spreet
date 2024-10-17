@@ -6,7 +6,7 @@ export const CLASS_PATHNAME = "/class";
 export const SOCIAL_PATHNAME = "/social";
 export const EVENT_PATHNAME = "/event";
 export const PERFORMANCE_PATHNAME = "/event/performances";
-export const BATTLE_PATHNAME = "/event/battle";
+export const BATTLE_PATHNAME = "/event/battles";
 
 export const sideNavItems = [
   {
@@ -15,7 +15,7 @@ export const sideNavItems = [
     path: EVENT_PATHNAME,
     subNav: [
       { id: "performances", label: "공연", path: PERFORMANCE_PATHNAME },
-      { id: "battle", label: "배틀", path: BATTLE_PATHNAME },
+      { id: "battles", label: "배틀", path: BATTLE_PATHNAME },
     ],
   },
 ];

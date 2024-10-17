@@ -1,11 +1,14 @@
-import { getPerformances } from "@/app/server/getPerformances";
-import { TPost, TPostResponse } from "@/type/post";
+import { getEventsByCategory } from "@/app/server/getPerformances";
+import { EventCategory } from "@/type/eventCategory";
+import { TPostResponse } from "@/type/post";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
-export const useInfinitePostQuery = () => {
+export const useInfinitePostQuery = (category: EventCategory) => {
+  // console.log("inner category", category);
   return useInfiniteQuery<TPostResponse, Error, InfiniteData<TPostResponse>>({
-    queryKey: ["events"],
-    queryFn: ({ pageParam }) => getPerformances(pageParam as number),
+    queryKey: ["events", category],
+    queryFn: ({ pageParam }) =>
+      getEventsByCategory(pageParam as number, category),
     getNextPageParam: (lastPage) => {
       const {
         meta: { currentPage, hasNextPage },
@@ -13,6 +16,6 @@ export const useInfinitePostQuery = () => {
       return hasNextPage ? currentPage + 1 : undefined;
     },
     initialPageParam: 1,
-    staleTime: 60 * 1000,
+    staleTime: 1000 * 60 * 5,
   });
 };

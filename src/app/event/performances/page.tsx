@@ -1,4 +1,4 @@
-import PerformancesList from "@/components/PerformancesList";
+import PerformancesList from "@/components/EventsList";
 import Wrapper from "@/components/shared/Wrapper";
 
 export default function Performance() {

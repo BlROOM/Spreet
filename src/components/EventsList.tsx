@@ -5,17 +5,22 @@ import formatDate from "@/utils/formatDate";
 import { useInfinitePostQuery } from "@/hooks/useInfinitePost";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useRef } from "react";
+import useEventCategory from "@/hooks/useEventCategory";
 
-export default function PerformancesList() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfinitePostQuery();
+export default function EventsList() {
+  const category = useEventCategory();
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfinitePostQuery(category);
   const loaderRef = useRef<HTMLDivElement | null>(null);
-
   useInfiniteScroll(loaderRef, {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   });
+  console.log("Fetched Data:", data); // Fetched Data 로그 출력
+
+  if (isLoading) return <div>로딩중......</div>;
   return (
     <>
       {data?.pages.map((page) =>

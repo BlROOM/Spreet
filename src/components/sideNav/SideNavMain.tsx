@@ -1,18 +1,9 @@
 "use client";
-
-import { sideNavItems } from "@/constants/path";
 import { usePathname } from "next/navigation";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useContext } from "react";
 
 type SideNavContext = {
-  selectedItem: string | null;
-  setSelectedItem: (item: string) => void;
+  pathname: string | null;
 };
 
 type SideNavMain = {
@@ -23,16 +14,8 @@ export const SideNavContext = createContext<SideNavContext | null>(null);
 export default function SidebarMain({ children }: SideNavMain) {
   const pathname = usePathname();
 
-  useEffect(() => {
-    const currentItem = sideNavItems.find((item) =>
-      pathname.includes(item.path)
-    );
-    setSelectedItem(currentItem ? currentItem.id : null);
-  }, [pathname]);
-
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
   return (
-    <SideNavContext.Provider value={{ selectedItem, setSelectedItem }}>
+    <SideNavContext.Provider value={{ pathname }}>
       {children}
     </SideNavContext.Provider>
   );

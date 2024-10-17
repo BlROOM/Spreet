@@ -4,17 +4,26 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const url = new URL(req.url);
-    const page = Number(url.searchParams.get("page")) || 1; // 기본값 1페이지
-    const limit = Number(url.searchParams.get("limit")) || 6; // 페이지당 10개 기본값
-    // 페이지에 맞는 데이터를 가져옴 (skip = 건너뛸 레코드 수, take = 가져올 레코드 수)
+
+    const page = Number(url.searchParams.get("page")) || 1;
+    const limit = Number(url.searchParams.get("limit")) || 6;
+    const category = url.searchParams.get("category");
+
+    // 카테고리에 따라 필터링된 데이터 요청
     const events = await prisma.events.findMany({
+      where: {
+        ...(category && category !== "all" && { type: category }), // 카테고리가 있으면 해당 필터 적용
+      },
       skip: (page - 1) * limit,
       take: limit,
     });
 
-    // 전체 데이터 개수를 확인해서 마지막 페이지 여부 판단
-    const totalPerformances = await prisma.events.count();
-    const totalPages = Math.ceil(totalPerformances / limit);
+    const totalEvents = await prisma.events.count({
+      where: {
+        ...(category && category !== "all" && { type: category }), // 총 개수도 필터링
+      },
+    });
+    const totalPages = Math.ceil(totalEvents / limit);
     return NextResponse.json({
       data: events,
       meta: {
@@ -26,7 +35,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch performances" },
+      { error: "Failed to fetch events" },
       { status: 500 }
     );
   } finally {

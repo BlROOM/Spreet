@@ -6,20 +6,21 @@ export default function SideBar() {
     <SideNav>
       <SideNav.List>
         {sideNavItems.map(({ id, label, path, subNav }) => (
-          <SideNav.item
-            path={path}
-            key={id}
-            id={id}
-            className="text-2xl px-3 text-grayscale-100"
-          >
-            {label}
-            {/* {subNav &&
+          <>
+            <SideNav.item path={path} key={id} className="text-2xl px-3 ">
+              {label}
+            </SideNav.item>
+            {subNav &&
               subNav.map(({ id: subId, label: subLabel, path: subPath }) => (
-                <SideNav.subItem path={subPath} key={subId} id={subId}>
+                <SideNav.item
+                  path={subPath}
+                  key={subId}
+                  className="text-xl px-3"
+                >
                   {subLabel}
-                </SideNav.subItem>
-              ))} */}
-          </SideNav.item>
+                </SideNav.item>
+              ))}
+          </>
         ))}
       </SideNav.List>
     </SideNav>
