@@ -28,7 +28,7 @@ export default function EventsList() {
           <Link
             key={id}
             href={`/event/performances/${id}`}
-            className="flex flex-col m-5 w-3/12"
+            className="flex flex-col m-5 w-3/12 min-w-[200px]"
           >
             <Card.Title>{title}</Card.Title>
             <Card.Img src={image} alt={"Card 이미지"} />

@@ -17,7 +17,7 @@ export default function SideNavtem({
   const { pathname } = useSideNav();
   const selected = pathname === path;
   return (
-    <li className={`max-w-[200px] px-4 py-1 min-h-12 flex justify-end `}>
+    <li className={`max-w-[200px] px-4 py-1 min-h-12 flex justify-end`}>
       <Link href={path}>
         <Button
           className={`relative ${className} ${
