@@ -4,9 +4,10 @@ export const KAKAKO_CDN_PATHNAME =
 export const ROUTE_API_PATHNAME = "/api/auth/";
 export const CLASS_PATHNAME = "/class";
 export const SOCIAL_PATHNAME = "/social";
-export const EVENT_PATHNAME = "/event";
+export const EVENT_PATHNAME = "/event/all";
 export const PERFORMANCE_PATHNAME = "/event/performances";
 export const BATTLE_PATHNAME = "/event/battles";
+// export const ALL_PATHNAME = "/event/all";
 
 export const sideNavItems = [
   {

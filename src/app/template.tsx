@@ -16,7 +16,7 @@ import Main from "@/components/main/Main";
 import Class from "@/components/Class";
 import Social from "@/components/Social";
 import SideBar from "@/components/SideBar";
-import Performance from "./event/performances/page";
+import EventsList from "@/components/EventsList";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -45,7 +45,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       </motion.div>
 
       <motion.div
-        key={`cache-${pathname}`}
+        key={`cache-${pathname}-${direction}`}
         custom={direction}
         variants={{
           center: {
@@ -66,7 +66,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         {prevPath === MAIN_PATHNAME && <Main />}
         {prevPath === CLASS_PATHNAME && <Class />}
         {prevPath === SOCIAL_PATHNAME && <Social />}
-        {prevPath === EVENT_PATHNAME && <Performance />}
+        {prevPath === EVENT_PATHNAME && <EventsList />}
       </motion.div>
     </main>
   );

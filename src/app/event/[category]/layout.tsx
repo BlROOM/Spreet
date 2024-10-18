@@ -5,23 +5,25 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { headers } from "next/headers";
 
 export default async function Layout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { category: string };
 }) {
   const queryClient = new QueryClient();
   // !오류!  : layout에서 header를 사용해서 url을 가져오는 시도를 한다면
-  // prefetchDataf를사용할 수 없음?!
+  // prefetchData를사용할 수 없음?!
+  // 해결방안 : [category] 동적세그먼트로 해결
+  // const headersList = headers();
+  // const pathname = headersList.get("x-pathname");
 
-  const headersList = headers();
-  const pathname = headersList.get("x-pathname");
   let category: EventCategory = "all";
-  if (pathname === "/events/performances") {
+  if (params.category === "performances") {
     category = "performance";
-  } else if (pathname === "/events/battles") {
+  } else if (params.category === "battles") {
     category = "battle";
   }
   await queryClient.prefetchInfiniteQuery({

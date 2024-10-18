@@ -6,8 +6,8 @@ export default function SideBar() {
     <SideNav>
       <SideNav.List>
         {sideNavItems.map(({ id, label, path, subNav }) => (
-          <>
-            <SideNav.item path={path} key={id} className="text-2xl px-3 ">
+          <div key={id}>
+            <SideNav.item path={path} className="text-2xl px-3 ">
               {label}
             </SideNav.item>
             {subNav &&
@@ -20,7 +20,7 @@ export default function SideBar() {
                   {subLabel}
                 </SideNav.item>
               ))}
-          </>
+          </div>
         ))}
       </SideNav.List>
     </SideNav>
