@@ -5,9 +5,15 @@ import formatDate from "@/utils/formatDate";
 import { useInfinitePostQuery } from "@/hooks/useInfinitePost";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useRef } from "react";
-import { FixedSizeList as List } from "react-window";
+import { FixedSizeGrid as Grid } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 import useEventCategory from "@/hooks/useEventCategory";
+interface MakeItemProps {
+  columnIndex: number;
+  rowIndex: number;
+  style: React.CSSProperties;
+}
 
 export default function EventsList() {
   const category = useEventCategory();
@@ -22,61 +28,52 @@ export default function EventsList() {
     hasNextPage,
     isFetchingNextPage,
   });
-
   // 데이터가 없을 경우
   const items = data?.pages.flatMap((page) => page.data) || [];
   const itemCount = items.length;
 
-  // 각 아이템의 높이
-  const itemHeight = 100; // 카드의 높이에 따라 조정 필요
-  if (isLoading) return <div>로딩중......</div>;
-  return (
-    <>
-      <List
-        height={window.innerHeight} // 리스트 높이 설정
-        itemCount={itemCount}
-        itemSize={itemHeight}
-        width="100vw"
-        style={{
-          position: "relative",
-          height: "100%",
-          overflow: "auto",
-          willChange: "transform",
-          direction: "ltr",
-          display: "flex",
-          padding: "0.5rem",
-          flexWrap: "wrap",
-        }}
-        onScroll={({ scrollOffset }) => {
-          // 스크롤 위치가 끝에 도달했는지 확인하여 다음 페이지 로드
-          if (
-            scrollOffset + window.innerHeight >= itemCount * itemHeight &&
-            hasNextPage
-          ) {
-            fetchNextPage();
-          }
-        }}
-      >
-        {({ index }) => {
-          const { id, title, date, location, host, image } = items[index];
+  // 각 아이템의 높이와 너비 설정
+  const itemHeight = 420; // 카드 높이에 맞게 조정 필요
+  const itemWidth = 320; // 카드 너비
 
-          return (
-            <Link
-              key={id}
-              href={`/event/performances/${id}`}
-              className="flex flex-col m-5 w-3/12 min-w-[200px]"
-            >
-              <Card.Title>{title}</Card.Title>
-              <Card.Img src={image} alt={"Card 이미지"} />
-              <Card.Author
-                date={formatDate(date)}
-                name={host}
-                location={location}
-              />
-            </Link>
-          );
-        }}
-      </List>
+  if (isLoading) return <div>로딩중......</div>;
+
+  // 아이템을 만드는 콜백 함수
+  const makeItem = ({ columnIndex, rowIndex, style }: MakeItemProps) => {
+    const itemIndex =
+      columnIndex + rowIndex * Math.floor(window.innerWidth / itemWidth);
+
+    if (itemIndex >= itemCount) return null; // 아이템이 없을 경우 null 반환
+
+    const { id, title, date, location, host, image } = items[itemIndex];
+    return (
+      <div style={style}>
+        <Link key={id} href={`/event/performances/${id}`}>
+          <Card>
+            <Card.Title>{title}</Card.Title>
+            <Card.Img src={image} alt={"Card 이미지"} />
+            <Card.Author date={date} name={host} location={location} />
+          </Card>
+        </Link>
+      </div>
+    );
+  };
+
+  return (
+    <AutoSizer>
+      {({ height, width }) => (
+        <Grid
+          columnCount={Math.floor(width / itemWidth)}
+          columnWidth={itemWidth}
+          height={height}
+          rowCount={Math.ceil(itemCount / Math.floor(width / itemWidth))}
+          rowHeight={itemHeight}
+          width={width}
+          itemData={[items, Math.floor(width / itemWidth)]} // 아이템 데이터 전달
+        >
+          {makeItem}
+        </Grid>
+      )}
       {/* {data?.pages.map((page) =>
         page.data.map(({ id, title, date, location, host, image }) => (
           <Link
@@ -95,7 +92,7 @@ export default function EventsList() {
         ))
       )} */}
       {/* <div ref={loaderRef} className="h-8" /> */}
-      {isFetchingNextPage && <p>로딩 중입니다...</p>}
-    </>
+      {/* {isFetchingNextPage && <p>로딩 중입니다...</p>} */}
+    </AutoSizer>
   );
 }
