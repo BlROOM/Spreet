@@ -32,7 +32,6 @@ export default function EventsList() {
   const items = data?.pages.flatMap((page) => page.data) || [];
   const itemCount = items.length;
 
-  // 각 아이템의 높이와 너비 설정
   const itemHeight = 420; // 카드 높이에 맞게 조정 필요
   const itemWidth = 320; // 카드 너비
 
@@ -43,7 +42,7 @@ export default function EventsList() {
     const itemIndex =
       columnIndex + rowIndex * Math.floor(window.innerWidth / itemWidth);
 
-    if (itemIndex >= itemCount) return null; // 아이템이 없을 경우 null 반환
+    if (itemIndex >= itemCount) return null;
 
     const { id, title, date, location, host, image } = items[itemIndex];
     return (
@@ -69,7 +68,8 @@ export default function EventsList() {
           rowCount={Math.ceil(itemCount / Math.floor(width / itemWidth))}
           rowHeight={itemHeight}
           width={width}
-          itemData={[items, Math.floor(width / itemWidth)]} // 아이템 데이터 전달
+          itemData={[items, Math.floor(width / itemWidth)]}
+          className="no-scrollbar"
         >
           {makeItem}
         </Grid>
