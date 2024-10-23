@@ -12,18 +12,20 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // 카테고리에 따라 필터링된 데이터 요청
     const events = await prisma.events.findMany({
       where: {
-        ...(category && category !== "all" && { type: category }), // 카테고리가 있으면 해당 필터 적용
+        ...(category && category !== "all" && { type: category }),
       },
       skip: (page - 1) * limit,
       take: limit,
     });
 
+    console.log("events", events);
     const totalEvents = await prisma.events.count({
       where: {
         ...(category && category !== "all" && { type: category }), // 총 개수도 필터링
       },
     });
     const totalPages = Math.ceil(totalEvents / limit);
+
     return NextResponse.json({
       data: events,
       meta: {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Card from "@/components/shared/card/.";
 import { useInfinitePostQuery } from "@/hooks/useInfinitePost";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
@@ -19,8 +19,18 @@ interface MakeItemProps {
 export default function EventsList() {
   const category = useEventCategory();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfinitePostQuery(category);
+  const {
+    data,
+    fetchNextPage,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfinitePostQuery(category);
+
+  useEffect(() => {
+    refetch(); // useInfinitePostQuery의 refetch 메서드 사용
+  }, []);
 
   const items = useMemo(() => {
     return data?.pages.flatMap((page) => page.data) || []; //데이터 없을 경우 처리
@@ -28,14 +38,15 @@ export default function EventsList() {
 
   const itemCount = items.length;
 
-  const SCREEN_WIDTH = 1080;
+  const SCREEN_WIDTH = 1280;
   const ITEM_HEIGHT = 420; // 카드 높이에 맞게 조정 필요
   const ITEM_WIDTH = 320; // 카드 너비
   const makeItem = useCallback(
     ({ columnIndex, rowIndex, style }: MakeItemProps) => {
       const itemIndex =
         columnIndex + rowIndex * Math.floor(SCREEN_WIDTH / ITEM_WIDTH);
-
+      // console.log("items", items);
+      // console.log("itemCount", itemCount);
       if (itemIndex >= itemCount) return null;
 
       const { id, title, date, location, host, image } = items[itemIndex];
@@ -51,7 +62,7 @@ export default function EventsList() {
         </div>
       );
     },
-    [items, itemCount, ITEM_HEIGHT]
+    [items, itemCount, SCREEN_WIDTH]
   );
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -82,12 +93,12 @@ export default function EventsList() {
           </Grid>
         )}
       </AutoSizer>
-      {true && (
+      {isFetchingNextPage && (
         <div className="absolute left-1/2 bottom-2 w-1/12 transform -translate-x-1/2">
           <LoadingSpinner />
         </div>
       )}
-      <div ref={loaderRef} className="h-8" />
+      <div ref={loaderRef} className="bsolute left-1/2 bottom-2 h-8" />
     </Wrapper>
   );
 }

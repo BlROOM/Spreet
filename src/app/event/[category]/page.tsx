@@ -1,4 +1,3 @@
-import Wrapper from "@/components/shared/Wrapper";
 import EventsList from "@/components/EventsList";
 
 export default function EventPage() {

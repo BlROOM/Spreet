@@ -26,6 +26,7 @@ export default async function Layout({
   } else if (params.category === "battles") {
     category = "battle";
   }
+
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["events", category],
     queryFn: ({ pageParam }) =>

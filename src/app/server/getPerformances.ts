@@ -10,7 +10,8 @@ export const getEventsByCategory = async (
     `${process.env.NEXT_PUBLIC_DEV_API_URL}/api/events?page=${page}&limit=10&category=${category}`
   );
   if (!res.ok) throw new Error("Failed to fetch events");
-  return res.json();
+  const data = await res.json();
+  return data;
 };
 
 export const getPerformanceById = async (id: string) => {
@@ -18,5 +19,6 @@ export const getPerformanceById = async (id: string) => {
     `${process.env.NEXT_PUBLIC_DEV_API_URL}/api/events/${id}`
   );
   if (!res.ok) throw new Error("Failed to fetch performance");
-  return res.json();
+  const data = await res.json();
+  return data;
 };
