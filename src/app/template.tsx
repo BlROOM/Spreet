@@ -44,7 +44,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         {children}
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         key={`cache-${pathname}-${direction}`}
         custom={direction}
         variants={{
@@ -67,7 +67,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         {prevPath === CLASS_PATHNAME && <Class />}
         {prevPath === SOCIAL_PATHNAME && <Social />}
         {prevPath === EVENT_PATHNAME && <EventsList />}
-      </motion.div>
+      </motion.div> */}
     </main>
   );
 }

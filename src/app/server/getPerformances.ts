@@ -7,7 +7,10 @@ export const getEventsByCategory = async (
   category: EventCategory
 ): Promise<TPostResponse> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_DEV_API_URL}/api/events?page=${page}&limit=10&category=${category}`
+    `${process.env.NEXT_PUBLIC_DEV_API_URL}/api/events?page=${page}&limit=10&category=${category}`,
+    {
+      cache: "no-store", // 캐시를 사용하지 않고 항상 서버로 요청
+    }
   );
   if (!res.ok) throw new Error("Failed to fetch events");
   const data = await res.json();

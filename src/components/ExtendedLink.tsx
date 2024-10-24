@@ -20,16 +20,10 @@ export default function ExtendedLink({
     if (router.currentPath === href) return;
     router.push(href);
   };
-  // console.log(
-  //   "extend",
-  //   href,
-  //   router.currentPath,
-  //   href.includes(router.currentPath)
-  // );
   return (
     <Link
       className={`link ${className} ${
-        href.includes(router.currentPath) && "text-redpoint-500"
+        href === router.currentPath && "text-redpoint-500"
       }`}
       onClick={onClick}
       href="#"

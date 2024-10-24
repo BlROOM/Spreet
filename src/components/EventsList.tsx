@@ -21,14 +21,8 @@ interface MakeItemProps {
 export default function EventsList() {
   const category = useEventCategory();
 
-  const {
-    data,
-    fetchNextPage,
-    refetch,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfinitePostQuery(category);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfinitePostQuery(category);
 
   const items = useMemo(() => {
     return data?.pages.flatMap((page) => page.data) || []; //데이터 없을 경우 처리
