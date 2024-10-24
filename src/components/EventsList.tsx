@@ -10,6 +10,8 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import useEventCategory from "@/hooks/useEventCategory";
 import Wrapper from "./shared/Wrapper";
 import LoadingSpinner from "./loading/LoadingSpinner";
+import { ITEM_HEIGHT, ITEM_WIDTH, SCREEN_WIDTH } from "@/constants/dimensions";
+import SkeletonEventList from "./skeleton/SkeletonEventList";
 interface MakeItemProps {
   columnIndex: number;
   rowIndex: number;
@@ -28,25 +30,16 @@ export default function EventsList() {
     isLoading,
   } = useInfinitePostQuery(category);
 
-  useEffect(() => {
-    refetch(); // useInfinitePostQuery의 refetch 메서드 사용
-  }, []);
-
   const items = useMemo(() => {
     return data?.pages.flatMap((page) => page.data) || []; //데이터 없을 경우 처리
   }, [data]);
 
   const itemCount = items.length;
 
-  const SCREEN_WIDTH = 1280;
-  const ITEM_HEIGHT = 420; // 카드 높이에 맞게 조정 필요
-  const ITEM_WIDTH = 320; // 카드 너비
   const makeItem = useCallback(
     ({ columnIndex, rowIndex, style }: MakeItemProps) => {
       const itemIndex =
         columnIndex + rowIndex * Math.floor(SCREEN_WIDTH / ITEM_WIDTH);
-      // console.log("items", items);
-      // console.log("itemCount", itemCount);
       if (itemIndex >= itemCount) return null;
 
       const { id, title, date, location, host, image } = items[itemIndex];
@@ -73,7 +66,7 @@ export default function EventsList() {
     isFetchingNextPage,
   });
 
-  if (isLoading) return <div>로딩중......</div>;
+  if (isLoading) return <SkeletonEventList />;
 
   return (
     <Wrapper className="relative p-2 flex w-[1280px] sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl h-[80vh]">

@@ -34,6 +34,12 @@ export default async function Layout({
     initialPageParam: 1,
     staleTime: 1000 * 60 * 5,
   });
+
+  // 캐시된 데이터를 안전하게 설정 (예시로 'events' 쿼리를 설정)
+  // queryClient.setQueryData(['events', category], {
+  //   pages: (queryClient.getQueryData(['events', category]) as any)?.pages || [],
+  //   pageParams: [0],
+  // });
   const dehydratedState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>

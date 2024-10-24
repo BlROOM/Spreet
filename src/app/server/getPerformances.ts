@@ -20,5 +20,6 @@ export const getPerformanceById = async (id: string) => {
   );
   if (!res.ok) throw new Error("Failed to fetch performance");
   const data = await res.json();
+
   return data;
 };

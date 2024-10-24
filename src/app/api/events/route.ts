@@ -18,7 +18,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       take: limit,
     });
 
-    console.log("events", events);
     const totalEvents = await prisma.events.count({
       where: {
         ...(category && category !== "all" && { type: category }), // 총 개수도 필터링
