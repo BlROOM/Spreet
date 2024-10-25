@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouterWrapper } from "@/provider/RouterWrapperProvider";
+import { EVENT_PATHNAME } from "@/constants/path";
 
 type ExtendedLink = {
   href: string;
@@ -13,17 +14,21 @@ export default function ExtendedLink({
   children,
   className,
 }: ExtendedLink) {
-  const router = useRouterWrapper();
+  const { push, currentPath } = useRouterWrapper();
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (router.currentPath === href) return;
-    router.push(href);
+    if (currentPath === href) return;
+    push(href);
   };
+  const isActive =
+    href === currentPath ||
+    (href === EVENT_PATHNAME && href.includes("/event"));
   return (
     <Link
       className={`link ${className} ${
-        href === router.currentPath && "text-redpoint-500"
+        // 현재경로 navlink 를 통한 경로라면 redpot 색깔 추가
+        isActive && "text-redpoint-500"
       }`}
       onClick={onClick}
       href="#"
