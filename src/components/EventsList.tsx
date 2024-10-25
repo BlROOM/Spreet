@@ -12,6 +12,7 @@ import Wrapper from "./shared/Wrapper";
 import LoadingSpinner from "./loading/LoadingSpinner";
 import { ITEM_HEIGHT, ITEM_WIDTH, SCREEN_WIDTH } from "@/constants/dimensions";
 import SkeletonEventList from "./skeleton/SkeletonEventList";
+import formatDate from "@/utils/formatDate";
 interface MakeItemProps {
   columnIndex: number;
   rowIndex: number;
@@ -43,7 +44,11 @@ export default function EventsList() {
             <Card>
               <Card.Title>{title}</Card.Title>
               <Card.Img src={image} alt={"Card 이미지"} />
-              <Card.Author date={date} name={host} location={location} />
+              <Card.Author
+                date={formatDate(date)}
+                name={host}
+                location={location}
+              />
             </Card>
           </Link>
         </div>

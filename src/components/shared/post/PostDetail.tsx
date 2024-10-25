@@ -15,7 +15,7 @@ export default function PostDetail({ id }: PostDetail) {
   const queryClient = useQueryClient();
 
   // 리스트에서 캐싱된 데이터 가져오기 (없으면 undefined 반환)
-  const cachedData = queryClient.getQueryData<TPost>(["performance", id]);
+  const cachedData = queryClient.getQueryData<TPost>(["events", id]);
 
   const {
     data: post,
@@ -23,7 +23,7 @@ export default function PostDetail({ id }: PostDetail) {
     isLoading,
     isFetching,
   } = useQuery<TPost, Error>({
-    queryKey: ["performance", id],
+    queryKey: ["events", id],
     queryFn: () => getPerformanceById(id),
     initialData: cachedData, // 캐시된 데이터를 먼저 사용
     staleTime: 1000 * 60 * 5,
@@ -55,7 +55,7 @@ export default function PostDetail({ id }: PostDetail) {
               <Post.InfoItem
                 key={index}
                 icon={item.icon}
-                className={`${index === 0 ? "mt-2" : ""}`}
+                className={`${index === 0 && "mt-2"}`}
               >
                 {item.label}
               </Post.InfoItem>
@@ -64,7 +64,7 @@ export default function PostDetail({ id }: PostDetail) {
         </div>
         <hr className="text-grayscale-400 w-full my-2" />
         <Post.Price
-          price={post.price}
+          price={Number(post.price)}
           discountedPrice={post?.discounted_price}
           description={post.discount_description}
         />
