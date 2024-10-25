@@ -23,7 +23,7 @@ export default function ExtendedLink({
   };
   const isActive =
     href === currentPath ||
-    (href === EVENT_PATHNAME && href.includes("/event"));
+    (href === EVENT_PATHNAME && currentPath.includes("/event"));
   return (
     <Link
       className={`link ${className} ${

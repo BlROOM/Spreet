@@ -15,7 +15,7 @@ export default function SideNavtem({
   className,
 }: SidebarBaseItemProps) {
   const { pathname } = useSideNav();
-  const selected = pathname === path;
+  const selected = pathname?.includes(path);
   return (
     <li className={`max-w-[200px] px-4 py-1 min-h-12 flex justify-end`}>
       <Link href={path}>
