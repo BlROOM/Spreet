@@ -3,24 +3,34 @@ import Link from "next/link";
 import Card from "@/components/shared/card/.";
 import { useInfinitePostQuery } from "@/hooks/useInfinitePost";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-
 import useEventCategory from "@/hooks/useEventCategory";
 import Wrapper from "./shared/Wrapper";
 import LoadingSpinner from "./loading/LoadingSpinner";
 import { ITEM_HEIGHT, ITEM_WIDTH, SCREEN_WIDTH } from "@/constants/dimensions";
 import SkeletonEventList from "./skeleton/SkeletonEventList";
 import formatDate from "@/utils/formatDate";
+import useWindowSize from "@/hooks/useWindowSize";
 interface MakeItemProps {
   columnIndex: number;
   rowIndex: number;
   style: React.CSSProperties;
 }
 
+// const getColumnCount = (width: number) => {
+//   console.log("width", width);
+//   if (width < 640) return 1;
+//   if (width < 1100) return 2;
+//   // if (width < 1280) return 3;
+//   // if (width < 1450) return 4;
+//   return 3; // xl: 1280px 이상
+// };
+
 export default function EventsList() {
   const category = useEventCategory();
+  const windowSize = useWindowSize();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfinitePostQuery(category);
@@ -30,13 +40,20 @@ export default function EventsList() {
   }, [data]);
 
   const itemCount = items.length;
-
   const makeItem = useCallback(
     ({ columnIndex, rowIndex, style }: MakeItemProps) => {
       const itemIndex =
         columnIndex + rowIndex * Math.floor(SCREEN_WIDTH / ITEM_WIDTH);
-      if (itemIndex >= itemCount) return null;
+      // if (!windowSize) return null;
+      // const columnCount = getColumnCount(windowSize.width);
 
+      // const itemIndex = columnIndex + rowIndex * columnCount;
+
+      // console.log(
+      //   `itemIndex: ${itemIndex}, columnIndex: ${columnIndex}, rowIndex: ${rowIndex}, columnCount : ${columnCount} `
+      // );
+
+      if (itemIndex >= itemCount) return null;
       const { id, title, date, location, host, image } = items[itemIndex];
       return (
         <div style={style}>
@@ -54,7 +71,8 @@ export default function EventsList() {
         </div>
       );
     },
-    [items, itemCount, SCREEN_WIDTH]
+    [itemCount, SCREEN_WIDTH]
+    // [itemCount, windowSize]
   );
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -66,31 +84,34 @@ export default function EventsList() {
   });
 
   if (isLoading) return <SkeletonEventList />;
-
   return (
-    <Wrapper className="relative p-2 flex w-[1280px] sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl h-[80vh]">
+    <Wrapper className="relative p-2 flex flex-wrap h-[80vh] w-full max-w-[1280px]">
       <AutoSizer>
-        {({ height, width }) => (
-          <Grid
-            columnCount={Math.floor(width / ITEM_WIDTH)}
-            columnWidth={ITEM_WIDTH}
-            height={height}
-            rowCount={Math.ceil(itemCount / Math.floor(width / ITEM_WIDTH))}
-            rowHeight={ITEM_HEIGHT}
-            width={width}
-            itemData={[items, Math.floor(width / ITEM_WIDTH)]}
-            className="no-scrollbar"
-          >
-            {makeItem}
-          </Grid>
-        )}
+        {({ height, width }) => {
+          // const columnCount = getColumnCount(width); // 너비에 따른 열 수
+
+          return (
+            <Grid
+              columnCount={Math.floor(width / ITEM_WIDTH)}
+              columnWidth={ITEM_WIDTH}
+              height={height}
+              rowCount={Math.ceil(itemCount / Math.floor(width / ITEM_WIDTH))}
+              rowHeight={ITEM_HEIGHT}
+              width={width}
+              itemData={[items, Math.floor(width / ITEM_WIDTH)]}
+              className="no-scrollbar"
+            >
+              {makeItem}
+            </Grid>
+          );
+        }}
       </AutoSizer>
       {isFetchingNextPage && (
         <div className="absolute left-1/2 bottom-2 w-1/12 transform -translate-x-1/2">
           <LoadingSpinner />
         </div>
       )}
-      <div ref={loaderRef} className="bsolute left-1/2 bottom-2 h-8" />
+      <div ref={loaderRef} className="absolute left-1/2 bottom-2 h-8" />
     </Wrapper>
   );
 }
