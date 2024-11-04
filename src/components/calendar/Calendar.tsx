@@ -35,8 +35,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="flex-1 h-[400px]">
-      {/* 전체 너비 설정 */}
+    <div className="w-[400px] max-h-[400px]">
       <FullCalendar
         //   editable={true} // 드래그 앤 드롭 기능 허용
         //   events={events}
@@ -52,14 +51,17 @@ export default function Calendar() {
           return info.dayNumberText.replace("일", "");
         }}
         headerToolbar={{
-          start: "prev,next", // 이전/다음 버튼
-          center: "title", // 제목
-          end: "", // today 버튼 제거
+          // 헤더 툴바 설정
+          start: "prev",
+          center: "title",
+          end: "next",
         }}
+        contentHeight="400px"
         titleFormat={{ year: "numeric", month: "2-digit" }} // '2024년 05월'에서 '년'과 '월' 제거
         dayHeaders={true} // 요일 헤더를 표시
         dayHeaderFormat={{ weekday: "short" }} // 요일을 "일", "월" 등으로 축약
         firstDay={0}
+        aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
       />
     </div>
   );
