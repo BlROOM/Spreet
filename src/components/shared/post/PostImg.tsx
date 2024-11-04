@@ -1,14 +1,14 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { ReactNode } from "react";
 
-type PostImg = {
+interface PostImg extends ImageProps {
   width?: number;
   height?: number;
   src: string;
   alt: string;
   className?: string;
   children?: ReactNode;
-};
+}
 
 export default function PostImg({
   src,
@@ -27,6 +27,7 @@ export default function PostImg({
         width={width}
         height={height}
         className={className}
+        // objectFit="cover"
         {...props}
       />
       {children}

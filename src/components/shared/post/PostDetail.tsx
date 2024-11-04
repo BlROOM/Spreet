@@ -39,15 +39,15 @@ export default function PostDetail({ id }: PostDetail) {
   const infoItems = getPostInfoItems(post);
 
   return (
-    <Wrapper className="w-1/2 ">
+    <Wrapper className="w-1/2 max-h-[500px]">
       <Post.CoverImg src={post.image} alt={post.title}>
         <div className="flex gap-6">
           <Post.Img
             width={250}
-            height={250}
+            height={330}
             src={post.image}
             alt={post.title}
-            className="h-screen-40 rounded-lg relative"
+            className="rounded-lg relative"
           />
           <div className="flex flex-col gap-2 w-1/2">
             <Post.Title>{post.title}</Post.Title>

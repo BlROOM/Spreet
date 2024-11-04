@@ -15,7 +15,7 @@ export default function PostCoverImage({
     <PostImg
       src={src}
       alt={alt}
-      className="w-full h-screen-70 rounded-lg relative"
+      className="w-full h-[500px] rounded-lg relative"
       {...props}
     >
       <div className="bg-grayscale-800 absolute w-full h-[100%] top-0 opacity-75" />

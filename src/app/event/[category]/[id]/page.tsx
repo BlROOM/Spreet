@@ -8,7 +8,7 @@ export default async function EventDetail({
   params: { id: string };
 }) {
   return (
-    <section className="w-full flex gap-x-6">
+    <section className="w-full h-[100%] flex gap-x-6">
       <PostMain>
         <PostDetail id={params.id} />
       </PostMain>

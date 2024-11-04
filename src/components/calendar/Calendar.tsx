@@ -35,7 +35,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 h-[400px]">
       {/* 전체 너비 설정 */}
       <FullCalendar
         //   editable={true} // 드래그 앤 드롭 기능 허용
