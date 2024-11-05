@@ -5,12 +5,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction"; // interaction 플러그인 추가
 import "./Calendar.css";
 import Wrapper from "../shared/Wrapper";
+import { koreanHolidays } from "@/utils/koreanHolidays";
 export default function Calendar() {
-  const [events, setEvents] = useState([
-    { title: "Event 1", date: "2024-10-01", classNames: ["bright-event"] },
-    { title: "Event 2", date: "2024-10-07", classNames: ["bright-event"] },
-  ]);
-
   const handleEventDrop = (info: any) => {
     alert(`Event moved to ${info.event.start}`);
   };
@@ -22,18 +18,28 @@ export default function Calendar() {
     }
   };
 
-  const handleDateSelect = (selectInfo: any) => {
-    let title = prompt("Enter Event Title");
-    let calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect();
+  // const handleDateSelect = (selectInfo: any) => {
+  //   let title = prompt("Enter Event Title");
+  //   let calendarApi = selectInfo.view.calendar;
+  //   calendarApi.unselect();
 
-    if (title) {
-      setEvents([
-        ...events,
-        { title, date: selectInfo.startStr, classNames: ["bright-event"] },
-      ]);
-    }
-  };
+  //   if (title) {
+  //     setEvents([
+  //       ...events,
+  //       { title, date: selectInfo.startStr, classNames: ["bright-event"] },
+  //     ]);
+  //   }
+  // };
+
+  // 이벤트 커스텀 렌더링
+  function renderEventContent(eventInfo: any) {
+    console;
+    return (
+      <div className="holiday-event">
+        <span style={{ color: "#FF0000" }}>{eventInfo.event.title}</span>
+      </div>
+    );
+  }
 
   return (
     <Wrapper className="w-full max-w-[50%] max-h-[500px]">
@@ -63,6 +69,8 @@ export default function Calendar() {
         dayHeaderFormat={{ weekday: "short" }} // 요일을 "일", "월" 등으로 축약
         firstDay={0}
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
+        events={koreanHolidays}
+        eventContent={renderEventContent}
       />
     </Wrapper>
   );
