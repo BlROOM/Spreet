@@ -1,12 +1,37 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction"; // interaction 플러그인 추가
 import "./Calendar.css";
 import Wrapper from "../shared/Wrapper";
 import { koreanHolidays } from "@/utils/koreanHolidays";
-export default function Calendar() {
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { TPost } from "@/type/post";
+import formatDate from "@/utils/formatDate";
+
+type Calendar = {
+  id: string;
+};
+export default function Calendar({ id }: Calendar) {
+  const calendarRef = useRef<any>(null);
+
+  const { data: eventData } = useQuery<TPost>({
+    queryKey: ["events", id],
+    enabled: !!id,
+  });
+  const formattedDate = eventData?.date
+    ? formatDate(eventData.date)
+    : new Date().toISOString().split("T")[0];
+  console.log("formattedDate", formattedDate);
+
+  useEffect(() => {
+    if (formattedDate && calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.gotoDate(formattedDate); // 특정 날짜의 월을 보여줌
+    }
+  }, [formattedDate]);
+
   const handleEventDrop = (info: any) => {
     alert(`Event moved to ${info.event.start}`);
   };
@@ -41,9 +66,20 @@ export default function Calendar() {
     );
   }
 
+  const customEvent = eventData
+    ? {
+        title: eventData.title || "일정",
+        start: formatDate(eventData.date),
+        classNames: ["custom-event"], // 커스텀 이벤트용 클래스
+        display: "block", // 'background' 대신 'block' 사용
+      }
+    : null;
+
   return (
     <Wrapper className="w-full max-w-[50%] max-h-[500px]">
       <FullCalendar
+        ref={calendarRef}
+        initialDate={formattedDate}
         //   editable={true} // 드래그 앤 드롭 기능 허용
         //   events={events}
         //   eventDrop={handleEventDrop} // 이벤트 드롭 시 동작
@@ -69,7 +105,7 @@ export default function Calendar() {
         dayHeaderFormat={{ weekday: "short" }} // 요일을 "일", "월" 등으로 축약
         firstDay={0}
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
-        events={koreanHolidays}
+        events={[...koreanHolidays, ...(customEvent ? [customEvent] : [])]}
         eventContent={renderEventContent}
       />
     </Wrapper>

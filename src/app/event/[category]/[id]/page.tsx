@@ -12,7 +12,7 @@ export default async function EventDetail({
       <PostMain>
         <PostDetail id={params.id} />
       </PostMain>
-      <Calendar />
+      <Calendar id={params.id} />
     </section>
   );
 }
