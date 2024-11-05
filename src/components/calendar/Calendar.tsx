@@ -4,6 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction"; // interaction 플러그인 추가
 import "./Calendar.css";
+import Wrapper from "../shared/Wrapper";
 export default function Calendar() {
   const [events, setEvents] = useState([
     { title: "Event 1", date: "2024-10-01", classNames: ["bright-event"] },
@@ -35,7 +36,7 @@ export default function Calendar() {
   };
 
   return (
-    <div className="w-[400px] max-h-[400px]">
+    <Wrapper className="w-full max-w-[50%] max-h-[500px]">
       <FullCalendar
         //   editable={true} // 드래그 앤 드롭 기능 허용
         //   events={events}
@@ -63,6 +64,6 @@ export default function Calendar() {
         firstDay={0}
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
       />
-    </div>
+    </Wrapper>
   );
 }
