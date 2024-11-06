@@ -58,7 +58,7 @@ export default function Calendar({ id }: Calendar) {
 
   // 이벤트 커스텀 렌더링
   function renderEventContent(eventInfo: any) {
-    console;
+    if (eventInfo.event.classNames[0] === "has-event") return;
     return (
       <div className="holiday-event">
         <span style={{ color: "#FF0000" }}>{eventInfo.event.title}</span>
@@ -70,13 +70,12 @@ export default function Calendar({ id }: Calendar) {
     ? {
         title: eventData.title || "일정",
         start: formatDate(eventData.date),
-        classNames: ["custom-event"], // 커스텀 이벤트용 클래스
-        display: "block", // 'background' 대신 'block' 사용
+        className: "has-event", // 이벤트가 있는 날짜 표시용 클래스
       }
     : null;
 
   return (
-    <Wrapper className="w-full max-w-[50%] max-h-[500px]">
+    <Wrapper className="w-full max-w-[40%] max-h-[500px]">
       <FullCalendar
         ref={calendarRef}
         initialDate={formattedDate}
@@ -89,10 +88,10 @@ export default function Calendar({ id }: Calendar) {
         locale="ko" // 요일을 한글로 표시
         selectable={true} // 날짜 선택 가능
         //  select={handleDateSelect} // 날짜 선택 시 동작
-        dayCellContent={(info) => {
-          // 날짜 문자열에서 '일'을 제거
-          return info.dayNumberText.replace("일", "");
-        }}
+        // dayCellContent={(info) => {
+        //   // 날짜 문자열에서 '일'을 제거
+        //   return info.dayNumberText.replace("일", "");
+        // }}
         headerToolbar={{
           // 헤더 툴바 설정
           start: "prev",
@@ -105,6 +104,18 @@ export default function Calendar({ id }: Calendar) {
         dayHeaderFormat={{ weekday: "short" }} // 요일을 "일", "월" 등으로 축약
         firstDay={0}
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
+        dayCellContent={(info: any) => {
+          console.log("infoDate", formatDate(info.date), customEvent?.start);
+          const hasEvent =
+            customEvent && formatDate(info.date) === customEvent.start;
+          return (
+            <div
+              className={`fc-daygrid-day-top ${hasEvent ? "has-event" : ""}`}
+            >
+              {info.dayNumberText.replace("일", "")}
+            </div>
+          );
+        }}
         events={[...koreanHolidays, ...(customEvent ? [customEvent] : [])]}
         eventContent={renderEventContent}
       />
