@@ -43,6 +43,8 @@ export default function Calendar({ id }: Calendar) {
   }
   // formattedDate를 위한 커스텀 이벤트 생성
   const customEvent = {
+    id: "custom-event", // 고유한 ID 추가
+    title: "선택된 날짜",
     start: formattedDate,
     className: "custom-event",
   };
@@ -69,9 +71,10 @@ export default function Calendar({ id }: Calendar) {
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
         dayCellContent={(info: any) => {
           // formattedDate를 한국 시간대로 설정
-          const eventDate = new Date(formattedDate).toISOString().split("T")[0];
+          const eventDate = new Date(`${formattedDate}T00:00:00`);
           const isEventDate =
-            info.date.toISOString().split("T")[0] === eventDate;
+            info.date.toLocaleDateString("ko-KR") ===
+            eventDate.toLocaleDateString("ko-KR");
 
           if (isEventDate) {
             console.log(
