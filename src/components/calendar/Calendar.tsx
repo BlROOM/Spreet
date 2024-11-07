@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction"; // interaction 플러그인 추가
 import "./Calendar.css";
 import Wrapper from "../shared/Wrapper";
 import { koreanHolidays } from "@/utils/koreanHolidays";
@@ -25,73 +24,37 @@ export default function Calendar({ id }: Calendar) {
     : new Date().toISOString().split("T")[0];
   console.log("formattedDate", formattedDate);
 
-  useEffect(() => {
-    if (formattedDate && calendarRef.current) {
-      const calendarApi = calendarRef.current.getApi();
-      calendarApi.gotoDate(formattedDate); // 특정 날짜의 월을 보여줌
-    }
-  }, [formattedDate]);
-
-  const handleEventDrop = (info: any) => {
-    alert(`Event moved to ${info.event.start}`);
-  };
-
-  const handleEventClick = (info: any) => {
-    let newTitle = prompt("Edit Event Title:", info.event.title);
-    if (newTitle) {
-      info.event.setProp("title", newTitle);
-    }
-  };
-
-  // const handleDateSelect = (selectInfo: any) => {
-  //   let title = prompt("Enter Event Title");
-  //   let calendarApi = selectInfo.view.calendar;
-  //   calendarApi.unselect();
-
-  //   if (title) {
-  //     setEvents([
-  //       ...events,
-  //       { title, date: selectInfo.startStr, classNames: ["bright-event"] },
-  //     ]);
+  // useEffect(() => {
+  //   if (formattedDate && calendarRef.current) {
+  //     const calendarApi = calendarRef.current.getApi();
+  //     // 비동기적으로 처리
+  //     Promise.resolve().then(() => {
+  //       calendarApi.gotoDate(formattedDate);
+  //     });
   //   }
-  // };
-
+  // }, [formattedDate]);
   // 이벤트 커스텀 렌더링
   function renderEventContent(eventInfo: any) {
-    if (eventInfo.event.classNames[0] === "has-event") return;
     return (
       <div className="holiday-event">
         <span style={{ color: "#FF0000" }}>{eventInfo.event.title}</span>
       </div>
     );
   }
-
-  const customEvent = eventData
-    ? {
-        title: eventData.title || "일정",
-        start: formatDate(eventData.date),
-        className: "has-event", // 이벤트가 있는 날짜 표시용 클래스
-      }
-    : null;
-
+  // formattedDate를 위한 커스텀 이벤트 생성
+  const customEvent = {
+    start: formattedDate,
+    className: "custom-event",
+  };
   return (
     <Wrapper className="w-full max-w-[40%] max-h-[500px]">
       <FullCalendar
         ref={calendarRef}
         initialDate={formattedDate}
-        //   editable={true} // 드래그 앤 드롭 기능 허용
-        //   events={events}
-        //   eventDrop={handleEventDrop} // 이벤트 드롭 시 동작
-        //   eventClick={handleEventClick} // 이벤트 클릭 시 수정 기능 추가
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         locale="ko" // 요일을 한글로 표시
         selectable={true} // 날짜 선택 가능
-        //  select={handleDateSelect} // 날짜 선택 시 동작
-        // dayCellContent={(info) => {
-        //   // 날짜 문자열에서 '일'을 제거
-        //   return info.dayNumberText.replace("일", "");
-        // }}
         headerToolbar={{
           // 헤더 툴바 설정
           start: "prev",
@@ -105,18 +68,29 @@ export default function Calendar({ id }: Calendar) {
         firstDay={0}
         aspectRatio={1.2} // 가로 세로 비율을 조정하여 높이 설정
         dayCellContent={(info: any) => {
-          console.log("infoDate", formatDate(info.date), customEvent?.start);
-          const hasEvent =
-            customEvent && formatDate(info.date) === customEvent.start;
+          // formattedDate를 한국 시간대로 설정
+          const eventDate = new Date(formattedDate).toISOString().split("T")[0];
+          const isEventDate =
+            info.date.toISOString().split("T")[0] === eventDate;
+
+          if (isEventDate) {
+            console.log(
+              `Event Date: ${eventDate}, Info Date: ${
+                info.date.toISOString().split("T")[0]
+              }`
+            );
+          }
           return (
             <div
-              className={`fc-daygrid-day-top ${hasEvent ? "has-event" : ""}`}
+              className={`fc-daygrid-day-top ${
+                isEventDate ? "event-date" : ""
+              }`}
             >
               {info.dayNumberText.replace("일", "")}
             </div>
           );
         }}
-        events={[...koreanHolidays, ...(customEvent ? [customEvent] : [])]}
+        events={[customEvent]}
         eventContent={renderEventContent}
       />
     </Wrapper>
